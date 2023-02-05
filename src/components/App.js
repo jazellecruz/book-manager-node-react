@@ -11,7 +11,19 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(book);
+    fetch("http://localhost:8000/test", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({
+        title: book.title,
+        author: book.author,
+        descriptiomn: book.description,
+        category_id: book.category_id,
+        status_id: book.status_id
+      })
+    })
   }
 
   const handleChange = (e) => {
