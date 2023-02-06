@@ -5,13 +5,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: palevioletred; */
-  padding: 1.5rem 2rem;
+  z-index: 100;
+  padding: 1.5rem 3rem;
 }
 
 .navbar p{
   font-size: 32px;
-  font-weight: 500;
+  font-weight: bolder;
 }
 
 .nav-links-container ul{

@@ -16,5 +16,14 @@
 
 .dashboard {
   height: calc(100% - 80px);
-  padding: 0 2rem;
+  padding: 0 3rem;
+}
+
+.MuiGrid-root.MuiGrid-container {
+  margin-top: 24px;
+  padding: 0 3rem;
+}
+
+.MuiGrid-root.MuiGrid-item {
+  padding-top: 0 !important; 
 }
