@@ -1,8 +1,26 @@
 import React from 'react';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Library() {
+  const [books, setBooks] = useState([]);
+  
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:8000/library"
+    })
+    .then((result) => {
+      console.log(result.data)
+      setBooks([...result.data])
+    })
+  }, [])
+
   return (
-   <h1 style={{display: 'inline-block'}}>This is where the list of all ewwww will be rendered.</h1>
+    <ul>
+      {books.map(book => <li>{book.title}</li>) }
+    </ul>
+ 
   );
 }
 
