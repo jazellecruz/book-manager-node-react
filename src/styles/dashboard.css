@@ -1,0 +1,9 @@
+.dashboard-root {
+  position: absolute;
+  top: 0;
+  left: 20rem;
+  padding-top: 1.5rem;
+  background-color: inherit;
+}
+
+

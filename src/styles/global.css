@@ -1,29 +1,27 @@
-@import url('//fonts.cdnfonts.com/css/neue-haas-grotesk-text-pro');
+@import url('//fonts.cdnfonts.com/css/poppins');
 
 * {
   margin: 0;
   padding: 0;
-  font-family: "Neue Haas Grotesk Text Pro", sans-serif;
+  font-family: "Poppins", sans-serif;
+  color: #242424;
+
 }
 
 #root {
   height: 100vh;
+  background-color: #fdfdfd;
+
 }
 
-.body {
+body {
   height: 100%;
 }
 
-.dashboard {
-  height: calc(100% - 80px);
-  padding: 0 3rem;
+.secondary-text{
+  color: #7c8085;
 }
 
-.MuiGrid-root.MuiGrid-container {
-  margin-top: 24px;
-  padding: 0 3rem;
-}
-
-.MuiGrid-root.MuiGrid-item {
-  padding-top: 0 !important; 
+a {
+  text-decoration: none;
 }

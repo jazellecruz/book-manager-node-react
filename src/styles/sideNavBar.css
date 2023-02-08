@@ -1,6 +1,24 @@
 .side-navbar{
   height: 100%;
-  width: 20rem; 
-  background-color: antiquewhite;
-  display: inline-block;
+  width: 16rem; 
+  position: fixed;
+  padding: 2rem 0 0 2.5rem ;
+  /* background-color: bisque; */
+}
+
+.logo-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 32px;
+  margin-left: 12px;
+}
+
+.logo-container p{
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.MuiSvgIcon-root.logo{
+  font-size: 32px;
 }
