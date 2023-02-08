@@ -1,11 +1,10 @@
 import React from 'react';
-import NavBar from "./NavBar";
 import AppRoutes from "./Routes/AppRoutes";
+import "../styles/global.css";
 
 function App() {
   return (
     <>
-      <NavBar />
       <AppRoutes />
     </>
   );
