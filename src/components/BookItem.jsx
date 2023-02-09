@@ -1,9 +1,11 @@
 import React from 'react';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
+import { Rating } from "@mui/material"
 import "../styles/bookItem.css"
 
 function BookItem(props) {
   return(
+
     <div className="book-container">
       <div className="book-img-container">
         <img 

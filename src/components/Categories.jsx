@@ -73,7 +73,7 @@ function Categories(props) {
   ]
 
   return (
-    <>
+    <div>
       <div className="category-box">
         <p>Art & Photography</p>
       </div>
@@ -87,7 +87,7 @@ function Categories(props) {
           status={book.status}
         />)}
       </div>
-    </>
+    </div>
   );
 }
 

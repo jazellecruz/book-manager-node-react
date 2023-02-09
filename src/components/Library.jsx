@@ -14,7 +14,7 @@ function Library() {
       "description": null,
       "category": "Horror",
       "status": "Finished",
-      "rating": "3.80",
+      "rating": "3.30",
       "comment": "Creepy and disturbing as it should be but I will definitely NOT read again.",
       "dateAdded": "2023-01-29T16:00:00.000Z"
       },
@@ -47,7 +47,7 @@ function Library() {
         "description": null,
         "category": "Horror",
         "status": "Finished",
-        "rating": "3.80",
+        "rating": "3.60",
         "comment": "Creepy and disturbing as it should be but I will definitely NOT read again.",
         "dateAdded": "2023-01-29T16:00:00.000Z"
         },
@@ -74,7 +74,7 @@ function Library() {
         "dateAdded": "2023-01-26T16:00:00.000Z"
         }
   ]
-  
+
   // useEffect(() => {
   //   axios({
   //     method: "GET",
@@ -87,22 +87,23 @@ function Library() {
   // }, [])
 
   return (
-    <>
+      <>
       <div className="greet-box">
         <p>Hello, user!</p>
         <p className="secondary-text">You have read X books in the last X days.</p>
       </div>
-      <div className="books-list-container">
+      <div >
         {data.map(book => <BookItem 
           title={book.title}
           author={book.author}
           description={book.description}
+          rating={parseInt(book.rating)}
           img={book.img}
           category={book.category}
           status={book.status}
         />) }
       </div>
-    </>
+      </>
       
   );
 }

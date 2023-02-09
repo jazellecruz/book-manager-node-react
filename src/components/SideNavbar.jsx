@@ -7,6 +7,10 @@ import { List,
          Collapse, 
          ListItemIcon,
          ListItemText,
+         Button,
+         Modal,
+         Box,
+         Typography,
          createTheme,
          ThemeProvider} from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -15,14 +19,24 @@ import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
 import FaceRoundedIcon from '@mui/icons-material/FaceRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
+import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import "../styles/sideNavBar.css"
 
 function SideNavbar() {
-  const [open, setOpen] = useState(false);
+  const [openCategoryList, setOpenCategoryList] = useState(false);
+  const [openBookForm, setOpenBookForm] = useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleCategoryListClick = () => {
+    setOpenCategoryList(!openCategoryList);
   };
+
+  const handleOpenBookFormClick = () => {
+    setOpenBookForm(!openBookForm)
+  }
+
+  const handleCloseBookFormClick = () => {
+    setOpenBookForm(!openBookForm)
+  }
 
   const theme = createTheme({
     components: {
@@ -46,7 +60,21 @@ function SideNavbar() {
     }
   });
 
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
   return (
+    <>
+    
     <div className="side-navbar">
     <div className="logo-container">
       <AutoStoriesRoundedIcon className="logo"/>
@@ -54,6 +82,22 @@ function SideNavbar() {
     </div>
     <ThemeProvider theme={theme}>
       <List>
+        <Button onClick={handleOpenBookFormClick} variant="outlined" startIcon={<ControlPointRoundedIcon />}>
+          Add a book
+        </Button>
+        <Modal 
+          open={openBookForm}
+          onClose={handleCloseBookFormClick}
+        >
+          <Box sx={modalStyle}>
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+        </Modal>
         <Link to="library">
           <ListItemButton>
             <ListItemIcon>
@@ -62,15 +106,92 @@ function SideNavbar() {
             Library
           </ListItemButton>
         </Link>
-        <ListItemButton onClick={handleClick}>
+        <ListItemButton onClick={handleCategoryListClick}>
           <ListItemIcon>
             <CategoryRoundedIcon />
           </ListItemIcon>
           <ListItemText primary="Categories" />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {openCategoryList ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
+        <Collapse in={openCategoryList} timeout="auto" unmountOnExit>
+
+          <List component="div" style={{height: "260px", overflow: "auto"}}disablePadding>
+
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
+            <Link to="categories/art-and-photography">
+              <ListItemButton sx={{ pl: 4 }}>
+                Art & Photography
+              </ListItemButton>
+            </Link>
             <Link to="categories/art-and-photography">
               <ListItemButton sx={{ pl: 4 }}>
                 Art & Photography
@@ -81,7 +202,9 @@ function SideNavbar() {
                 Wishlist
               </ListItemButton>
             </Link>
+ 
           </List>
+
         </Collapse>
         <Link to="wishlist">
           <ListItemButton>
@@ -102,6 +225,8 @@ function SideNavbar() {
       </List>
     </ThemeProvider>
     </div>
+    
+    </>
   );
 
 }
