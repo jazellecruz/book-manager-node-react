@@ -1,8 +1,9 @@
 .greet-box {
-  padding-left: 20px;
+  margin: 28px 0 40px;
 }
 
 .greet-box p:first-of-type {
   font-size: 32px;
   font-weight: 600;
+  margin-bottom: 4px;
 }

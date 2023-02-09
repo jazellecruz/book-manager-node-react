@@ -8,14 +8,10 @@
 
 }
 
-#root {
-  height: 100vh;
-  background-color: #fdfdfd;
-
-}
-
 body {
   height: 100%;
+  width: 100%;
+  background-color: #fdfdfd;
 }
 
 .secondary-text{
@@ -24,4 +20,17 @@ body {
 
 a {
   text-decoration: none;
+}
+
+body::-webkit-scrollbar {
+  width: .5em;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: none;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 20px;
 }
