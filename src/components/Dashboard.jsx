@@ -9,9 +9,11 @@ import "../styles/dashboard.css"
 
 function Dashboard() {
   return(
-    <>
-      <SideNavbar />
-      <main className="dashboard-root">
+    <div className="dashboard-root">
+      <div className="sideNavBar-container"> 
+        <SideNavbar />
+      </div>
+      <div className="main-content-container">
         <Routes>
           <Route path="library/*" element={<Library/>} />
           <Route path="categories/:category" element={<Categories />}/>
@@ -19,13 +21,9 @@ function Dashboard() {
           <Route path="profile" element={<Profile />}/>
         </Routes>
         <Outlet />
-      </main>
-    </>
-   
+      </div>      
+    </div>
 
-      
-
-     
 
   );
 }
