@@ -87,9 +87,9 @@ function Library() {
   // }, [])
 
   return (
-      <>
+      <div>
       <div className="greet-box">
-        <p>Hello, user!</p>
+        <p>Hello, Jazelle!</p>
         <p className="secondary-text">You have read X books in the last X days.</p>
       </div>
       <div >
@@ -97,14 +97,13 @@ function Library() {
           title={book.title}
           author={book.author}
           description={book.description}
-          rating={parseInt(book.rating)}
+          rating={book.rating}
           img={book.img}
           category={book.category}
           status={book.status}
         />) }
       </div>
-      </>
-      
+      </div>
   );
 }
 

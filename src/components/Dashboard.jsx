@@ -21,6 +21,9 @@ function Dashboard() {
           <Route path="profile" element={<Profile />}/>
         </Routes>
         <Outlet />
+      </div>
+      <div>
+        {/*components to view goals */}
       </div>      
     </div>
 
