@@ -11,7 +11,7 @@ import { List,
          Modal,
          Box,
          Typography,
-         createTheme,
+         Avatar,
          ThemeProvider} from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
@@ -20,6 +20,7 @@ import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
 import FaceRoundedIcon from '@mui/icons-material/FaceRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
+import {listTheme, addBookTheme, modalStyle} from "../styles/themes/themes"
 import "../styles/sideNavBar.css"
 
 function SideNavbar() {
@@ -38,53 +39,33 @@ function SideNavbar() {
     setOpenBookForm(!openBookForm)
   }
 
-  const theme = createTheme({
-    components: {
-      MuiButtonBase: {
-        defaultProps: {
-          disableRipple: true
-        },
-        styleOverrides: {
-          root: {
-            marginBottom: "16px",
-          }
-        }
-      },
-      MuiListItemText: {
-        styleOverrides: {
-          primary: {
-            fontFamily: "inherit",
-          }
-        }
-      }
-    }
-  });
-
-  const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
+  const {firstName, lastName} = {
+    firstName: "Jazelle",
+    lastName: null
+  }
 
   return (
     <>
-    
     <div className="side-navbar">
     <div className="logo-container">
       <AutoStoriesRoundedIcon className="logo"/>
       <p>booked</p>
     </div>
-    <ThemeProvider theme={theme}>
+    <div className="avatar-container">
+      <Avatar 
+        alt="user-pic" 
+        src="https://i.pinimg.com/564x/12/00/b3/1200b3d273dd3869fc7ec511f96475be.jpg"
+        sx={{ width: 150, height: 150, }}
+        />
+      <p className="user-name">{firstName} {lastName}</p>
+    </div>
+    <ThemeProvider theme={listTheme}>
       <List>
-        <Button onClick={handleOpenBookFormClick} variant="outlined" startIcon={<ControlPointRoundedIcon />}>
+        <ThemeProvider theme={addBookTheme}>
+        {/* <Button onClick={handleOpenBookFormClick} variant="contained" startIcon={<ControlPointRoundedIcon />}>
           Add a book
-        </Button>
+        </Button> */}
+        </ThemeProvider>
         <Modal 
           open={openBookForm}
           onClose={handleCloseBookFormClick}
