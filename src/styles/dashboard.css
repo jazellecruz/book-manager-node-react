@@ -1,19 +1,16 @@
 .dashboard-root {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 18% 50%;
   background-color: inherit;
 }
 
 .sideNavBar-container {
   position: sticky;
-  overflow-y: auto;
   top: 0;
   height: 100vh;
-  box-sizing: border-box;
 }
 
 .main-content-container{
-  background-color: aquamarine;
   padding: 0 28px;
-  box-sizing: border-box;
+
 }

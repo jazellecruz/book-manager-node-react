@@ -1,6 +1,6 @@
 .side-navbar{
-  max-height: 100%;
-  padding: 2rem 0 0 2.5rem;
+  height: 100%;
+  padding: 2rem 2.5rem 0;
 
 }
 
@@ -15,6 +15,15 @@
 .logo-container p{
   font-size: 25px;
   font-weight: 600;
+}
+
+.avatar-container {
+  text-align: center;
+}
+
+.user-name {
+  font-size: 20px;
+  margin: 10px 0 14px 0;
 }
 
 .MuiSvgIcon-root.logo{
@@ -44,5 +53,25 @@
 
 .MuiList-root::-webkit-scrollbar-thumb {
   background-color: darkgrey;
+  border-radius: 18px;
+}
+
+.MuiButtonBase-root.MuiListItemButton-root {
+  width: 90%;
   border-radius: 20px;
+}
+
+.MuiButtonBase-root.MuiButton-contained {
+  font-family: inherit;
+  text-transform: capitalize;
+  border-radius: 20px;
+  margin: 0 0 16px 12px;
+  font-weight: 400;
+  width: 100%;
+  box-shadow: none;
+}
+
+.MuiAvatar-root.MuiAvatar-circular {
+  margin: 0 auto;
+  border: 8px solid #c0acf3;
 }

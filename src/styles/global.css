@@ -11,7 +11,7 @@
 body {
   height: 100%;
   width: 100%;
-  background-color: #fdfdfd;
+  background-color: #ececf0;
 }
 
 .secondary-text{
@@ -33,4 +33,5 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: darkgrey;
   border-radius: 20px;
+
 }
