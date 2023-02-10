@@ -4,6 +4,19 @@ import { Rating } from "@mui/material"
 import "../styles/bookItem.css"
 
 function BookItem(props) {
+
+  const getPrecision = (num) => {
+    let truePrecision; 
+    let decimal = num.split(".")[1];
+    console.log(decimal)
+    if (decimal === 0 || decimal === "0") {
+      truePrecision = null
+    } else {
+      truePrecision = parseInt(`0.${decimal}`)
+    }
+    return truePrecision
+  }
+
   return(
 
     <div className="book-container">
@@ -15,6 +28,8 @@ function BookItem(props) {
       <div className="book-info-container">
         <p className="book-title">{props.title}</p>
         <p>{props.author}</p>
+        <Rating name="simple-controlled" value={props.rating}
+          precision={getPrecision(props.rating)} readOnly/>
         <p>{props.category}</p>
         <p className="secondary-text">{props.description}</p>
         <p>{props.status}</p>
