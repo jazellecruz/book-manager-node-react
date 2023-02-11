@@ -41,7 +41,7 @@ function SideNavbar() {
 
   const {firstName, lastName} = {
     firstName: "Jazelle",
-    lastName: null
+    lastName: "Cruz"
   }
 
   return (
@@ -51,14 +51,7 @@ function SideNavbar() {
       <AutoStoriesRoundedIcon className="logo"/>
       <p>booked</p>
     </div>
-    <div className="avatar-container">
-      <Avatar 
-        alt="user-pic" 
-        src="https://i.pinimg.com/564x/12/00/b3/1200b3d273dd3869fc7ec511f96475be.jpg"
-        sx={{ width: 150, height: 150, }}
-        />
-      <p className="user-name">{firstName} {lastName}</p>
-    </div>
+    
     <ThemeProvider theme={listTheme}>
       <List>
         <ThemeProvider theme={addBookTheme}>
@@ -79,6 +72,17 @@ function SideNavbar() {
           </Typography>
         </Box>
         </Modal>
+        <Link to="profile">
+          <ListItemButton>
+          <ListItemIcon>
+          <Avatar 
+           alt="user-pic" 
+          src="https://i.pinimg.com/564x/12/00/b3/1200b3d273dd3869fc7ec511f96475be.jpg"
+          />
+          </ListItemIcon>
+          {firstName} {lastName}
+          </ListItemButton>
+        </Link>
         <Link to="library">
           <ListItemButton>
             <ListItemIcon>
@@ -193,14 +197,6 @@ function SideNavbar() {
               <LocalMallRoundedIcon />
             </ListItemIcon>
             <Link to="wishlist">Wishlist</Link>
-          </ListItemButton>
-        </Link>
-        <Link to="profile">
-          <ListItemButton>
-            <ListItemIcon>
-              <FaceRoundedIcon />
-            </ListItemIcon>
-            <Link to="profile">Profile</Link>
           </ListItemButton>
         </Link>
       </List>
