@@ -1,6 +1,6 @@
 .dashboard-root {
   display: grid;
-  grid-template-columns: 18% 50%;
+  grid-template-columns: 20% 80%;
   background-color: inherit;
 }
 
@@ -8,9 +8,10 @@
   position: sticky;
   top: 0;
   height: 100vh;
+  display: flex;
+  background-color:#404258;
 }
 
 .main-content-container{
   padding: 0 28px;
-
 }

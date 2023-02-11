@@ -1,7 +1,8 @@
 .side-navbar{
-  height: 100%;
+  height: 90%;
+  width: 100%;
   padding: 2rem 2.5rem 0;
-
+  /* background-color: #26252c; */
 }
 
 .logo-container {
@@ -72,6 +73,5 @@
 }
 
 .MuiAvatar-root.MuiAvatar-circular {
-  margin: 0 auto;
-  border: 8px solid #c0acf3;
+  border: 3px solid #c0acf3;
 }
