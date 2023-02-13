@@ -1,4 +1,12 @@
-.category-box p{
+.category-box {
+  margin: 28px 0 40px;
+}
+
+.category-box p:first-of-type{
   font-size: 60px;
+  font-weight: 600;
+}
+
+p span {
   font-weight: 600;
 }
