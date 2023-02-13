@@ -1,6 +1,6 @@
-import React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "../styles/sideNavBar.css"
 import { List, 
          ListItemButton, 
@@ -20,10 +20,12 @@ import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
 import FaceRoundedIcon from '@mui/icons-material/FaceRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
-import {listTheme, addBookTheme, modalStyle} from "../styles/themes/themes"
+import {listTheme, addBookTheme, modalStyle} from "../styles/themes/themes";
+import { kebabCase } from "../helpers/helpers";
 import "../styles/sideNavBar.css"
 
 function SideNavbar() {
+  const [categoriesList, setCategoriesList] = useState([])
   const [openCategoryList, setOpenCategoryList] = useState(false);
   const [openBookForm, setOpenBookForm] = useState(false);
 
@@ -43,6 +45,14 @@ function SideNavbar() {
     firstName: "Jazelle",
     lastName: "Cruz"
   }
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url:"http://localhost:8000/library/categories"
+    })
+    .then(res => setCategoriesList([...res.data]))
+  }, [])
 
   return (
     <>
@@ -100,96 +110,21 @@ function SideNavbar() {
         </ListItemButton>
         <Collapse in={openCategoryList} timeout="auto" unmountOnExit>
 
-          <List component="div" style={{height: "260px", overflow: "auto"}}disablePadding>
-
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="categories/art-and-photography">
-              <ListItemButton sx={{ pl: 4 }}>
-                Art & Photography
-              </ListItemButton>
-            </Link>
-            <Link to="wishlist">
-              <ListItemButton sx={{ pl: 4 }}>
-                Wishlist
-              </ListItemButton>
-            </Link>
- 
+          <List component="div" style={{height: "260px", overflow: "auto"}} disablePadding>
+            {categoriesList.map(({category, category_id}) => {
+              console.log(category , category_id)
+              let categoryName = kebabCase(category)
+              let categoryRoute = `categories/${categoryName}`
+              return (
+                <Link to={categoryRoute} categoryId={category_id}>
+                <ListItemButton sx={{ pl: 4 }}>
+                {category}
+                </ListItemButton>
+                </Link>
+              )
+            })}
+        
           </List>
-
         </Collapse>
         <Link to="wishlist">
           <ListItemButton>
