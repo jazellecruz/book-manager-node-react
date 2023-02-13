@@ -15,7 +15,7 @@ function BookItem({title, author, description, img, rating, category, status, pr
         <p className="book-title">{title}</p>
         <div>
         <p className="sub-text">{author}</p>
-        <Rating name="simple-controlled" value={rating} precision={precision} size="small" readOnly/>
+        <Rating name="simple-controlled" value={rating} size="small" readOnly/>
         </div>
         <p className="secondary-text">{description}</p>
         <div>
