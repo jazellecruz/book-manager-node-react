@@ -19,7 +19,7 @@ import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
 import FaceRoundedIcon from '@mui/icons-material/FaceRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
-import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
+
 import {listTheme, addBookTheme, modalStyle} from "../styles/themes/themes";
 import { kebabCase } from "../helpers/helpers";
 import "../styles/sideNavBar.css"
@@ -27,19 +27,13 @@ import "../styles/sideNavBar.css"
 function SideNavbar() {
   const [categoriesList, setCategoriesList] = useState([])
   const [openCategoryList, setOpenCategoryList] = useState(false);
-  const [openBookForm, setOpenBookForm] = useState(false);
+
 
   const handleCategoryListClick = () => {
     setOpenCategoryList(!openCategoryList);
   };
 
-  const handleOpenBookFormClick = () => {
-    setOpenBookForm(!openBookForm)
-  }
 
-  const handleCloseBookFormClick = () => {
-    setOpenBookForm(!openBookForm)
-  }
 
   const {firstName, lastName} = {
     firstName: "Jazelle",
@@ -64,24 +58,8 @@ function SideNavbar() {
     
     <ThemeProvider theme={listTheme}>
       <List>
-        <ThemeProvider theme={addBookTheme}>
-        {/* <Button onClick={handleOpenBookFormClick} variant="contained" startIcon={<ControlPointRoundedIcon />}>
-          Add a book
-        </Button> */}
-        </ThemeProvider>
-        <Modal 
-          open={openBookForm}
-          onClose={handleCloseBookFormClick}
-        >
-          <Box sx={modalStyle}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-        </Modal>
+
+   
         <Link to="profile">
           <ListItemButton>
           <ListItemIcon>
@@ -111,12 +89,10 @@ function SideNavbar() {
         <Collapse in={openCategoryList} timeout="auto" unmountOnExit>
 
           <List component="div" style={{height: "260px", overflow: "auto"}} disablePadding>
-            {categoriesList.map(({category, category_id}) => {
-              console.log(category , category_id)
-              let categoryName = kebabCase(category)
-              let categoryRoute = `categories/${categoryName}`
+            {categoriesList.map(({category}) => {
+              let categoryRoute = `categories/${kebabCase(category)}`
               return (
-                <Link to={categoryRoute} categoryId={category_id}>
+                <Link to={categoryRoute} >
                 <ListItemButton sx={{ pl: 4 }}>
                 {category}
                 </ListItemButton>

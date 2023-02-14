@@ -1,6 +1,7 @@
-import React from 'react';
+import { Link, } from 'react-router-dom';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import { Rating } from "@mui/material"
+import { kebabCase } from "../helpers/helpers"
 import "../styles/bookItem.css"
 
 function BookItem({title, author, description, img, rating, category, status, precision}) {
@@ -15,13 +16,19 @@ function BookItem({title, author, description, img, rating, category, status, pr
         <p className="book-title">{title}</p>
         <div>
         <p className="sub-text">{author}</p>
-        <Rating name="simple-controlled" value={rating} size="small" readOnly/>
+       <Rating name="simple-controlled" value={rating} size="small" readOnly/>
         </div>
         <p className="secondary-text">{description}</p>
         <div>
-          <p><span className="sub-text">Status:</span> {status}</p>
+          <p>
+            <span className="sub-text">Status:</span> 
+            <span className={kebabCase(status)}> {status}</span>
+          </p>
           <span>|</span>
-          <p><span className="sub-text">Category:</span> {category}</p>
+          <p>
+            <span className="sub-text">Category:</span> 
+            <span> <Link to={`../categories/${kebabCase(category)}`}>{category}</Link></span>
+          </p>
         </div>
         
       </div>
