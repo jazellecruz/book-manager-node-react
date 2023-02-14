@@ -35,3 +35,15 @@
 p {
   margin-top: 1px;
 }
+
+.finished {
+  color: #0E91A1;
+}
+
+.currently-reading{
+  color: #55aa7a;
+}
+
+.to-be-read {
+  color: #c79800;
+}

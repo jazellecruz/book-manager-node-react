@@ -7,3 +7,17 @@
   font-weight: 600;
   margin-bottom: 4px;
 }
+
+.add-sort-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(70% + 48px);
+}
+.MuiButtonBase-root.MuiButton-contained {
+  font-family: inherit;
+  text-transform: capitalize;
+  font-weight: 400;
+  width: 150px;
+  box-shadow: none;
+}

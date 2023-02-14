@@ -61,16 +61,6 @@
   border-radius: 20px;
 }
 
-.MuiButtonBase-root.MuiButton-contained {
-  font-family: inherit;
-  text-transform: capitalize;
-  border-radius: 20px;
-  margin: 0 0 16px 12px;
-  font-weight: 400;
-  width: 100%;
-  box-shadow: none;
-}
-
 .MuiAvatar-root.MuiAvatar-circular {
   border: 3px solid #c0acf3;
 }
