@@ -1,5 +1,5 @@
 .greet-box {
-  margin: 28px 0 40px;
+  margin: 0 0 20px;
 }
 
 .greet-box p:first-of-type {
@@ -12,8 +12,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: calc(70% + 48px);
+  padding: 20px 0;
+  width: 70%;
 }
+
 .MuiButtonBase-root.MuiButton-contained {
   font-family: inherit;
   text-transform: capitalize;

@@ -29,6 +29,7 @@ const addBookTheme = createTheme({
     MuiButtonBase: {
       defaultProps: {
         disableRipple: true,
+        disableFocusRipple: true,
       }
     }
   },
@@ -44,7 +45,8 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  maxWidth: "100%",
+  maxHeight: "100%",
   bgcolor: 'background.paper',
   borderRadius: "10px",
   boxShadow: 10,
