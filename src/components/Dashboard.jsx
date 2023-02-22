@@ -33,7 +33,7 @@ function Dashboard() {
           {categoriesList.map(category => {
             let categoryRoute = `categories/${kebabCase(category.category)}`
             return (
-              <Route path={categoryRoute} element={<Categories category_id={category.category_id} />}/>
+              <Route path={categoryRoute} element={<Categories category_id={category.category_id} category={category.category}/>}/>
             );
           })}
           <Route path="wishlist" element={<Wishlist />}/>

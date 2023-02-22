@@ -3,18 +3,16 @@ import axios from "axios"
 import BookItem from "../components/BookItem";
 import "../styles/category.css";
 
-function Categories({category_id}) {
+function Categories({category_id, category}) {
   const [books, setBooks] = useState([]);
-  const [category, setCategory] = useState();
   
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/library/categories/${category_id}`
+      url: `http://localhost:8000/library/books?category_id=${category_id}`
     })
     .then((res) => {
       setBooks([...res.data.books])
-      setCategory(res.data.category)
     })
   },[category_id])
 
