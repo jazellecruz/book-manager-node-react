@@ -1,12 +1,16 @@
 import { Link, } from 'react-router-dom';
+import axios from "axios";
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Rating } from "@mui/material"
 import { kebabCase } from "../helpers/helpers"
 import "../styles/bookItem.css"
 
-function BookItem({title, author, description, img, rating, category, status, precision}) {
+function BookItem({title, author, description, img, rating, category, status, precision, book_id, handleDelete}) {
+
   return(
-    <div className="book-container">
+
+      <div className="book-container">
       <div className="book-img-container">
         <img 
         src={img ? img : "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80" } 
@@ -30,9 +34,11 @@ function BookItem({title, author, description, img, rating, category, status, pr
             <span> <Link to={`../categories/${kebabCase(category)}`}>{category}</Link></span>
           </p>
         </div>
-        
       </div>
-    </div>
+      <button className="deleteBook-btn" onClick={() => handleDelete(book_id)}>
+          <DeleteOutlineOutlinedIcon />
+      </button>
+      </div>
   );
 }
 
