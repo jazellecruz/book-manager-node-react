@@ -29,13 +29,22 @@ function Library() {
       setBooks([...result.data.books])
       settotalOfFinishedBooks(result.data.totalOfFinishedBooks)
     })
+    .catch(err => {
+      console.log(err)
+    })
   }, [])
+
+  const handleDelete = (book_id) => {
+    axios.delete(`http://localhost:8000/test/${book_id}`)
+    .then((res) => console.log(res))
+    .catch(err => console.log(err))
+  }
 
   return (
       <div>
       <div className="greet-box">
         <p>Hello, Jazelle!</p>
-        <p className="secondary-text">You have read <span>{books.length}</span> books 
+        <p className="secondary-text">You have read <span>{totalOfFinishedBooks}</span> books 
         in the last {/*insert here the day the user was created then convert to days*/} days.</p>
       </div>
       <div className="add-sort-container">
@@ -44,6 +53,7 @@ function Library() {
       <div >
         {books.map(book => 
           <BookItem 
+            book_id={book.book_id}
             title={book.title}
             author={book.author}
             description={book.description}
@@ -52,6 +62,7 @@ function Library() {
             img={book.img}
             category={book.category}
             status={book.status}
+            handleDelete={handleDelete}
           />
         )}
       </div>
