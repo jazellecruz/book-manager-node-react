@@ -1,5 +1,6 @@
 
 .book-container {
+  position: relative;
   display: flex;
   gap: 16px;
   width: 70%;
@@ -46,4 +47,17 @@ p {
 
 .to-be-read {
   color: #c79800;
+}
+
+.deleteBook-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background-color: inherit;
+  color: #929292;
+}
+
+.deleteBook-btn:hover {
+  color: #F55050;
 }
