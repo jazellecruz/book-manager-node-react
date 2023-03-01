@@ -3,7 +3,7 @@ import axios from "axios";
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Rating } from "@mui/material"
-import { kebabCase } from "../helpers/helpers"
+import { kebabCase, trimString } from "../helpers/helpers"
 import "../styles/bookItem.css"
 
 function BookItem({title, author, description, img, rating, category, status, precision, book_id, handleDelete}) {
@@ -22,7 +22,7 @@ function BookItem({title, author, description, img, rating, category, status, pr
         <p className="sub-text">{author}</p>
        <Rating name="simple-controlled" value={rating} size="small" readOnly/>
         </div>
-        <p className="secondary-text">{description}</p>
+        <p className="secondary-text">{trimString(description)}</p>
         <div>
           <p>
             <span className="sub-text">Status:</span> 
