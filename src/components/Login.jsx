@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
-    user: "",
+    username: "",
     password: ""
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     let {name, value} = e.target;
@@ -25,11 +28,12 @@ const Login = () => {
     })
     .then(res => {
       console.log(res)
+      navigate("/")
     })
     .catch(err => console.log(err));
 
     setCredentials({
-      user: "",
+      username: "",
       password: ""
     });
   }
@@ -38,11 +42,12 @@ const Login = () => {
     <div>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input type="text" 
-          name="user" 
-          value={credentials.user} 
-          placeholder="Username or Email"
+          name="username" 
+          value={credentials.username} 
+          placeholder="Username"
           autoComplete="off" 
-          onChange={(e) => handleChange(e)}>
+          onChange={(e) => handleChange(e)}
+          required>
         </input>
         <br />
         <input type="password" 
@@ -50,7 +55,8 @@ const Login = () => {
           value={credentials.password} 
           placeholder="Password" 
           autoComplete="off" 
-          onChange={(e) => handleChange(e)}>
+          onChange={(e) => handleChange(e)}
+          required>
         </input>
         <br />
         <button type="submit">Login</button>
