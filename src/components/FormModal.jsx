@@ -13,7 +13,6 @@ function FormModal() {
   const [openBookForm, setOpenBookForm] = useState(false);
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
-
   const [categoriesList, setCategoriesList] = useState([]);
   const [entry, setEntry] = useState({
     title: null,
@@ -23,14 +22,18 @@ function FormModal() {
     status_id: null
   });
 
-  const handleCancel = () => {
+  const emptyEntry = () => {
     setEntry({
       title: null,
       author: null,
       description: null,
       category_id: null,
       status_id: null
-    });
+    })
+  }
+
+  const handleCancel = () => {
+    emptyEntry();
     handleCloseBookFormClick();
   }
 
@@ -49,7 +52,6 @@ function FormModal() {
       ...entry,
       [name] : value
     })
-    console.log(entry)
   }
 
   const handleSubmit = (e) => {
