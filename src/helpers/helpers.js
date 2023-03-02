@@ -11,4 +11,21 @@ const getPrecision = (string) => {
   return decimal
 }
 
-export {kebabCase, getPrecision}
+const trimString = (string) => {
+  let trimmedString
+  if(string) {
+
+    if(string.length < 261){
+      trimmedString = string
+    } else {
+      trimmedString = `${string.slice(0, 261)}...`
+    }
+    
+  } else{
+    trimmedString = undefined
+  }
+
+  return trimmedString
+}
+
+export {kebabCase, getPrecision, trimString}
