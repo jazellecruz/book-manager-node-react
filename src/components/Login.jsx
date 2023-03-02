@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { saveToken } from "../utils/utils.js"
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -27,8 +28,8 @@ const Login = () => {
       data: credentials,
     })
     .then(res => {
-      console.log(res)
-      navigate("/")
+      saveToken(res.data.accessToken);
+      navigate("/");
     })
     .catch(err => console.log(err));
 
