@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/sideNavBar.css"
@@ -17,9 +18,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
-import FaceRoundedIcon from '@mui/icons-material/FaceRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
-
 import {listTheme, addBookTheme, modalStyle} from "../styles/themes/themes";
 import { kebabCase } from "../helpers/helpers";
 import "../styles/sideNavBar.css"
@@ -28,12 +27,16 @@ function SideNavbar() {
   const [categoriesList, setCategoriesList] = useState([])
   const [openCategoryList, setOpenCategoryList] = useState(false);
 
+  const navigate = useNavigate();
 
   const handleCategoryListClick = () => {
     setOpenCategoryList(!openCategoryList);
   };
 
-
+  const handleSignOut = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/")
+  }
 
   const {firstName, lastName} = {
     firstName: "Jazelle",
@@ -112,6 +115,7 @@ function SideNavbar() {
         </Link>
       </List>
     </ThemeProvider>
+    <button onClick={() => handleSignOut()}>Sign Out</button>
     </div>
     
     </>
