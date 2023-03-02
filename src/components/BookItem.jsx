@@ -1,6 +1,4 @@
 import { Link, } from 'react-router-dom';
-import axios from "axios";
-import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Rating } from "@mui/material"
 import { kebabCase, trimString } from "../helpers/helpers"
