@@ -28,6 +28,7 @@ const Login = () => {
       data: credentials,
     })
     .then(res => {
+      console.log(res)
       saveToken(res.data.accessToken);
       navigate("/");
     })
