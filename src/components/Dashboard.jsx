@@ -16,7 +16,10 @@ function Dashboard() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8000/library/categories"
+      url: "http://localhost:8000/library/categories",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken")
+      }
     })
     .then(res => setCategoriesList([...res.data]))
     .catch(err => console.error(err))

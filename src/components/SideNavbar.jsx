@@ -46,7 +46,10 @@ function SideNavbar() {
   useEffect(() => {
     axios({
       method: "GET",
-      url:"http://localhost:8000/library/categories"
+      url:"http://localhost:8000/library/categories",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken")
+      }
     })
     .then(res => setCategoriesList([...res.data]))
   }, [])
@@ -61,9 +64,7 @@ function SideNavbar() {
     
     <ThemeProvider theme={listTheme}>
       <List>
-
-   
-        <Link to="profile">
+        {/* <Link to="profile">
           <ListItemButton>
           <ListItemIcon>
           <Avatar 
@@ -73,7 +74,7 @@ function SideNavbar() {
           </ListItemIcon>
           {firstName} {lastName}
           </ListItemButton>
-        </Link>
+        </Link> */}
         <Link to="library">
           <ListItemButton>
             <ListItemIcon>

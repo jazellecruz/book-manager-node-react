@@ -23,7 +23,10 @@ function Library() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8000/library/books"
+      url: "http://localhost:8000/library/books",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken")
+      }
     })
     .then((result) => {
       setBooks([...result.data.books])

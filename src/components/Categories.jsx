@@ -9,7 +9,10 @@ function Categories({category_id, category}) {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/library/books?category_id=${category_id}`
+      url: `http://localhost:8000/library/books?category_id=${category_id}`,
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken")
+      }
     })
     .then((res) => {
       setBooks([...res.data.books])
