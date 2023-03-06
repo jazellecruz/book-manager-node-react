@@ -35,7 +35,7 @@ const addBookTheme = createTheme({
   },
   palette: {
     primary: {
-      main: "#6e59a4"
+      main: "#dfd8fd"
     },
   },
 });
