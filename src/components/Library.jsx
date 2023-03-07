@@ -14,6 +14,7 @@ import BookItem from './BookItem';
 import FormModal from "../components/FormModal";
 import { getPrecision } from "../helpers/helpers";
 import "../styles/library.css";
+import { CategoriesContext } from "../contexts/context";
 
 function Library() {
   const [books, setBooks] = useState([]);
