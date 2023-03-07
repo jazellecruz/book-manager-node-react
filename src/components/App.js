@@ -26,7 +26,8 @@ function App() {
         if(err.status === 401) {
           destroyToken();
           navigate("/login")
-        }
+        } 
+        console.log(err)
       });
   }
 
