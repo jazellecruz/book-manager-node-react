@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { Modal,
          Box, 
@@ -8,12 +8,12 @@ import { Modal,
          Snackbar } from "@mui/material"
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import {addBookTheme, modalStyle} from "../styles/themes/themes"
+import { CategoriesContext } from "../contexts/context";
 
 function FormModal() {
   const [openBookForm, setOpenBookForm] = useState(false);
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
-  const [categoriesList, setCategoriesList] = useState([]);
   const [entry, setEntry] = useState({
     title: null,
     author: null,
@@ -21,7 +21,7 @@ function FormModal() {
     category_id: null,
     status_id: null
   });
-
+  const categoriesList = useContext(CategoriesContext);
   const emptyEntry = () => {
     setEntry({
       title: null,
@@ -36,7 +36,6 @@ function FormModal() {
     emptyEntry();
     handleCloseBookFormClick();
   }
-
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
@@ -82,18 +81,18 @@ function FormModal() {
   }
 
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: "http://localhost:8000/library/categories",
-      headers: {
-        "x-access-token": localStorage.getItem("accessToken")
-      }
-    })
-    .then(res => {
-      setCategoriesList([...res.data])
-    })
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: "http://localhost:8000/library/categories",
+  //     headers: {
+  //       "x-access-token": localStorage.getItem("accessToken")
+  //     }
+  //   })
+  //   .then(res => {
+  //     setCategoriesList([...res.data])
+  //   })
+  // }, []);
 
   const handleOpenBookFormClick = () => {
     setOpenBookForm(!openBookForm)
@@ -128,9 +127,13 @@ function FormModal() {
         <label for="category_id">Category</label>
         <select name="category_id" value={entry.category_id} onChange={(e)=> handleChange(e)} >
         <option value="" disabled selected>Select a category</option>
-        {categoriesList.map(category => {
-          return (<option value={category.category_id}>{category.category}</option>)
-        })}
+        <CategoriesContext.Consumer >
+        {categoriesList => 
+          categoriesList.map(({ category, category_id}) => 
+            <option value={category_id}>{category}</option>
+          )
+        }
+        </CategoriesContext.Consumer>
         </select>
         <br></br>
         <label for="status_id">Status</label>
