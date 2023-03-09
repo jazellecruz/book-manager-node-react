@@ -28,4 +28,17 @@ const trimString = (string) => {
   return trimmedString
 }
 
-export {kebabCase, getPrecision, trimString}
+const sanitizeInput = (value, name) => {
+  if(!value) return null
+
+  if(name === "category_id" || name === "status_id") {
+    return Number(value)
+  } else {
+    let string = value.replace(/"/g, "'")
+    return  string || value
+  }
+
+}
+
+
+export {kebabCase, getPrecision, trimString, sanitizeInput}
