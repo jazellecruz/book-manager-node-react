@@ -9,6 +9,7 @@ import { Modal,
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import {addBookTheme, modalStyle} from "../styles/themes/themes"
 import { CategoriesContext } from "../contexts/context";
+import { sanitizeInput } from "../helpers/helpers"
 
 function FormModal() {
   const [openBookForm, setOpenBookForm] = useState(false);
@@ -21,7 +22,9 @@ function FormModal() {
     category_id: null,
     status_id: null
   });
+  const [error, setError] = useState({});
   const categoriesList = useContext(CategoriesContext);
+
   const emptyEntry = () => {
     setEntry({
       title: null,
@@ -47,10 +50,12 @@ function FormModal() {
 
   const handleChange = (e) => {
     let { name, value } = e.target;
+
     setEntry({
       ...entry,
-      [name] : value
+      [name] : sanitizeInput(value, name)
     })
+    console.log(entry)
   }
 
   const handleSubmit = (e) => {
@@ -58,23 +63,28 @@ function FormModal() {
 
     axios({
       method: "POST",
-      url: "http://localhost:8000/test",
+      url: "http://localhost:8000/library/books",
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
+        "x-access-token": localStorage.getItem("accessToken")
       },
       data: {
         title: entry.title,
         author: entry.author,
-        descriptiomn: entry.description,
+        description: entry.description,
         category_id: entry.category_id,
         status_id: entry.status_id
       }
     })
     .then(res => {
-      handleCancel();
-      setOpenSuccessSnackbar(true)
+      if(res.status === 200) {
+        console.log(res)
+        handleCancel();
+        setOpenSuccessSnackbar(true)
+      }
     })
     .catch(err => {
+      setError({...err.response})
       handleCancel();
       setOpenErrorSnackbar(true)
     })
@@ -129,8 +139,8 @@ function FormModal() {
         <option value="" disabled selected>Select a category</option>
         <CategoriesContext.Consumer >
         {categoriesList => 
-          categoriesList.map(({ category, category_id}) => 
-            <option value={category_id}>{category}</option>
+          categoriesList.map(({ category, category_id}) =>
+           <option value={category_id}>{category}</option>
           )
         }
         </CategoriesContext.Consumer>
@@ -154,7 +164,7 @@ function FormModal() {
       </Snackbar>
       <Snackbar open={openErrorSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} variant="filled" severity="error" sx={{ width: '100%' }}>
-          Error fulfilling request!
+          {`Request failed! Try again later. (Error ${error.status})`}
         </Alert>
       </Snackbar>
   </>
