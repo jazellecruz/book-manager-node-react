@@ -1,6 +1,6 @@
 .dashboard-root {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 19% 80%;
   background-color: inherit;
 }
 

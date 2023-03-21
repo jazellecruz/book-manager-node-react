@@ -1,7 +1,9 @@
 .side-navbar{
-  height: 90%;
+  height: 100%;
   width: 100%;
-  padding: 2rem 2.5rem 0;
+  box-sizing: border-box;
+  padding: 2rem 2rem 0;
+  background-color: #dfd8fd;
 }
 
 .logo-container {
@@ -15,10 +17,6 @@
 .logo-container p{
   font-size: 25px;
   font-weight: 600;
-}
-
-.avatar-container {
-  text-align: center;
 }
 
 .user-name {
@@ -57,10 +55,8 @@
 }
 
 .MuiButtonBase-root.MuiListItemButton-root {
-  width: 90%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
   border-radius: 20px;
-}
-
-.MuiAvatar-root.MuiAvatar-circular {
-  border: 3px solid #c0acf3;
 }
