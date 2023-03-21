@@ -1,17 +1,32 @@
 import { Link, } from 'react-router-dom';
+import axios from "axios";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Rating } from "@mui/material"
 import { kebabCase, trimString } from "../helpers/helpers"
 import "../styles/bookItem.css"
 
-function BookItem({title, author, description, img, rating, category, status, precision, book_id, handleDelete}) {
+function BookItem({title, author, description, img, rating, category, status, precision, book_id, renderComponent}) {
+
+  const handleDelete = (book_id) => {
+    axios({
+      method: "delete",
+      url: `http://localhost:8000/library/books/${book_id}`,
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken")
+      }
+      })
+    .then(res => {
+      renderComponent()
+    })
+    .catch(err => console.log(err))
+  }
 
   return(
 
       <div className="book-container">
       <div className="book-img-container">
         <img 
-        src={img ? img : "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80" } 
+        src={img} 
         alt="book-cover"/>
       </div>
       <div className="book-info-container">
