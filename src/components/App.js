@@ -20,10 +20,9 @@ function App() {
         if (res.data.status === 200) {
           navigate("/dashboard/library")
         }
-        
       })
       .catch(err => {
-        if(err.status === 401) {
+        if(err.response.status === 401) {
           destroyToken();
           navigate("/login")
         } 

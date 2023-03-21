@@ -5,6 +5,11 @@ import "../styles/category.css";
 
 function Categories({category_id, category}) {
   const [books, setBooks] = useState([]);
+  const [render, setRender] = useState(0);
+
+  const renderComponent = () => {
+    setRender(render + 1);
+  }
   
   useEffect(() => {
     axios({
@@ -17,7 +22,7 @@ function Categories({category_id, category}) {
     .then((res) => {
       setBooks([...res.data.books])
     })
-  },[category_id])
+  },[category_id, render])
 
   return (
     <div>
@@ -28,14 +33,16 @@ function Categories({category_id, category}) {
         {books.length === 1 ? "book" : "books"} for <span> {category} </span> category.</p>
       </div>
       <div className="books-list-container">
-        {books.map(({title, author, description, rating, category, status}) => 
+        {books.map(({title, author, description, rating, img, category, status}) => 
         <BookItem 
           title={title}
           author={author}
           description={description}
+          img={img}
           category={category}
           rating={rating}
           status={status}
+          renderComponent={renderComponent}
         />)}
       </div>
     </div>

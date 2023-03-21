@@ -19,7 +19,12 @@ import { CategoriesContext } from "../contexts/context";
 function Library() {
   const [books, setBooks] = useState([]);
   const [totalOfFinishedBooks, settotalOfFinishedBooks] = useState()
+  const [render, setRender] = useState(0)
   const [sortBy, setSortBy] = useState('Default');
+
+  const renderComponent = () => {
+    setRender(render + 1);
+  }
 
   useEffect(() => {
     axios({
@@ -36,13 +41,9 @@ function Library() {
     .catch(err => {
       console.log(err)
     })
-  }, [])
-
-  const handleDelete = (book_id) => {
-    axios.delete(`http://localhost:8000/test/${book_id}`)
-    .then((res) => console.log(res))
-    .catch(err => console.log(err))
-  }
+    
+    console.log(render);
+  }, [render])
 
   return (
       <div>
@@ -52,7 +53,7 @@ function Library() {
         in the last {/*insert here the day the user was created then convert to days*/} days.</p>
       </div>
       <div className="add-sort-container">
-      <FormModal />
+      <FormModal renderComponent={renderComponent}/>
       </div>
       <div >
         {books.map(book => 
@@ -66,7 +67,7 @@ function Library() {
             img={book.img}
             category={book.category}
             status={book.status}
-            handleDelete={handleDelete}
+            renderComponent={renderComponent}
           />
         )}
       </div>

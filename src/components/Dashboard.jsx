@@ -30,9 +30,7 @@ function Dashboard() {
     <CategoriesContext.Provider value={categoriesList}>
     <div className="dashboard-root">
       <div className="sideNavBar-container"> 
-
           <SideNavbar />
-
       </div>
       <div className="main-content-container">
         <Routes>
