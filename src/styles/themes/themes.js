@@ -18,6 +18,7 @@ const listTheme = createTheme({
       styleOverrides: {
         primary: {
           fontFamily: "inherit",
+          color: "black"
         }
       }
     }
@@ -25,17 +26,17 @@ const listTheme = createTheme({
 });
 
 const addBookTheme = createTheme({
-  components: {
-    MuiButtonBase: {
-      defaultProps: {
-        disableRipple: true,
-        disableFocusRipple: true,
-      }
-    }
-  },
   palette: {
     primary: {
       main: "#dfd8fd"
+    },
+  },
+});
+
+const signoutBtn = createTheme({
+  palette: {
+    primary: {
+      main: "#000"
     },
   },
 });
@@ -55,4 +56,4 @@ const modalStyle = {
 
 
 
-export {listTheme, addBookTheme, modalStyle}
+export {listTheme, addBookTheme, modalStyle, signoutBtn}
