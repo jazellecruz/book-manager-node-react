@@ -20,7 +20,7 @@ import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
 import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import { CategoriesContext } from "../contexts/context";
-import {listTheme, addBookTheme, modalStyle} from "../styles/themes/themes";
+import {listTheme, addBookTheme, modalStyle, signoutBtn} from "../styles/themes/themes";
 import { kebabCase } from "../helpers/helpers";
 import "../styles/sideNavBar.css"
 
@@ -43,7 +43,7 @@ function SideNavbar() {
     <>
       <div className="side-navbar">
         <div className="logo-container">
-          <AutoStoriesRoundedIcon className="logo"/>
+          {/* <AutoStoriesRoundedIcon className="logo"/> */}
           <p>booked</p>
         </div>
         <ThemeProvider theme={listTheme}>
@@ -87,7 +87,10 @@ function SideNavbar() {
             </Link>
           </List>
         </ThemeProvider>
-        <button onClick={() => handleSignOut()}>Sign Out</button>
+        <ThemeProvider theme={signoutBtn}>
+          <Button variant="contained" onClick={() => handleSignOut()} disableElevation>Sign Out</Button>
+        </ThemeProvider>
+        {/* <button onClick={() => handleSignOut()}>Sign Out</button> */}
       </div>
     </>
   );
