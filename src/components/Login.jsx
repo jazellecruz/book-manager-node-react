@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import "../styles/login.css"
 import { saveToken } from "../utils/utils.js"
 
 const Login = () => {
@@ -41,27 +42,36 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className="login-section">
+      <p>Welcome back</p>
+      <p>Please enter your details.</p>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" 
-          name="username" 
-          value={credentials.username} 
-          placeholder="Username"
-          autoComplete="off" 
-          onChange={(e) => handleChange(e)}
-          required>
-        </input>
-        <br />
-        <input type="password" 
-          name="password" 
-          value={credentials.password} 
-          placeholder="Password" 
-          autoComplete="off" 
-          onChange={(e) => handleChange(e)}
-          required>
-        </input>
-        <br />
-        <button type="submit">Login</button>
+        <div>
+          <label for="username">Username</label>
+          <input className="login-input" 
+            type="text" 
+            name="username" 
+            value={credentials.username} 
+            placeholder="Username"
+            autoComplete="off" 
+            onChange={(e) => handleChange(e)}
+            required>
+          </input>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input className="login-input" 
+            type="password" 
+            name="password" 
+            value={credentials.password} 
+            placeholder="Password" 
+            autoComplete="off" 
+            onChange={(e) => handleChange(e)}
+            required>
+          </input>
+        </div>
+
+        <button type="submit" className="login-btn login-input">Login</button>
       </form>
     </div>
   )
