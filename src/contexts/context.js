@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from "react"
-import axios from "axios";
+import { createContext } from "react"
 
 const CategoriesContext = createContext();
+const SnackbarContext = createContext();
 
-export { CategoriesContext }
+export { CategoriesContext, SnackbarContext}
