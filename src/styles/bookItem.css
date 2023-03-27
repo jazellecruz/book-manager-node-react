@@ -61,3 +61,7 @@ p {
 .deleteBook-btn:hover {
   color: #F55050;
 }
+
+.MuiDialog-Paper {
+  font-family: inherit;
+}
