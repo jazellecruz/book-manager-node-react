@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import SnackbarWrapper from "./SnackbarWrapper";
 import { Modal,
@@ -9,13 +9,14 @@ import { Modal,
          Snackbar } from "@mui/material"
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import {addBookTheme, modalStyle} from "../styles/themes/themes"
-import { CategoriesContext } from "../contexts/context";
+import { CategoriesContext, SnackbarContext } from "../contexts/context";
 import { sanitizeInput } from "../helpers/helpers"
 import "../styles/form.css"
 
 function FormModal({renderComponent}) {
   const [openBookForm, setOpenBookForm] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [statusList, setStatusList] = useState([])
   const [snackbarType, setSnackbarType] = useState({
     message: "",
     severity: ""
@@ -29,6 +30,7 @@ function FormModal({renderComponent}) {
     status_id: null
   });
   const categoriesList = useContext(CategoriesContext);
+  const snackbar = useContext(SnackbarContext);
 
   const emptyEntry = () => {
     setEntry({
@@ -80,36 +82,37 @@ function FormModal({renderComponent}) {
         console.log(res)
         handleCancel();
         renderComponent();
-        setSnackbarType({
-          message:"Successfully saved!",
-          severity: "success"
-        });
-        setOpenSnackbar(!openSnackbar)
+        snackbar("success", "Successfully Saved!")
+        // setSnackbarType({
+        //   message:"Successfully saved!",
+        //   severity: "success"
+        // });
+        // setOpenSnackbar(!openSnackbar)
       }
     })
     .catch(err => {
       handleCancel();
-      setSnackbarType({
-        message: `Request failed! Try again later. (Error ${err.response.status})`,
-        severity: "error"
-      });
-      setOpenSnackbar(true)
+      snackbar("error", `Request failed! Try again later. (Error ${err.response.status})`)
+      // setSnackbarType({
+      //   message: `Request failed! Try again later. (Error ${err.response.status})`,
+      //   severity: "error"
+      // });
     })
   }
 
-
-  // useEffect(() => {
-  //   axios({
-  //     method: "GET",
-  //     url: "http://localhost:8000/library/categories",
-  //     headers: {
-  //       "x-access-token": localStorage.getItem("accessToken")
-  //     }
-  //   })
-  //   .then(res => {
-  //     setCategoriesList([...res.data])
-  //   })
-  // }, []);
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:8000/library/status",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken")
+      }
+    })
+    .then(res => {
+      setStatusList([...res.data])
+    })
+    .catch(err => console.log(err))
+  }, []);
 
   const handleOpenBookFormClick = () => {
     setOpenBookForm(!openBookForm)
@@ -167,7 +170,10 @@ function FormModal({renderComponent}) {
         <label for="status_id">Status:</label>
         <select className="input-border" name="status_id" placeholder="status" onChange={(e)=> handleChange(e)} value={entry.status_id}>
           <option value="" disabled selected>Select a status</option>
-          <option value="1">Finished</option>
+          {statusList.map(({ status_id, status}) =>
+            <option value={status_id}>{status}</option>
+            )
+          }
         </select>
       </div>
       <div className="form-btn-container">
