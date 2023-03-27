@@ -6,13 +6,35 @@ import Categories from "./Categories";
 import Wishlist from './Wishlist';
 import Profile from './Profile';
 import ProtectedRoute from './ProtectedRoute';
-import { CategoriesContext } from '../contexts/context';
+import {Snackbar, Alert} from "@mui/material";
+import { CategoriesContext, SnackbarContext } from '../contexts/context';
 import {Routes, Route, Outlet} from "react-router-dom";
 import { kebabCase } from "../helpers/helpers";
 import "../styles/dashboard.css";
 
 function Dashboard() {
-  const [categoriesList, setCategoriesList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([])
+  const [categoriesAndStatus, setCategoriesAndStatus] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarType, setSnackbarType] = useState({
+    severity: "",
+    message: ""
+  })
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false)
+  }
+  const setOpenAndTypeSnackbar = (severity, message) => {
+    setSnackbarType({
+      severity: severity,
+      message: message
+    });
+    setOpenSnackbar(true);
+  }
+
+  const endpoints = [
+    "http://localhost:8000/library/categories",
+    "http://localhost:8000/library/status"
+  ]
 
   useEffect(() => {
     axios({
@@ -28,6 +50,7 @@ function Dashboard() {
 
   return(
     <CategoriesContext.Provider value={categoriesList}>
+    <SnackbarContext.Provider value={setOpenAndTypeSnackbar}>
     <div className="dashboard-root">
       <div className="sideNavBar-container"> 
           <SideNavbar />
@@ -49,8 +72,16 @@ function Dashboard() {
       </div>
       <div>
       {/*components to view goals */}
-      </div>      
-    </div>
+      </div>
+      {openSnackbar && 
+        <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} variant="filled" severity={snackbarType.severity} sx={{ width: '100%' }}>
+            {snackbarType.message}
+          </Alert>
+        </Snackbar>
+      }
+      </div>
+    </SnackbarContext.Provider>
     </CategoriesContext.Provider>
   );
 }
