@@ -1,4 +1,5 @@
 import { useState, useEffect }from "react"; 
+import FormModal from "./FormModal";
 import axios from "axios"
 import BookItem from "../components/BookItem";
 import "../styles/category.css";
@@ -6,7 +7,7 @@ import "../styles/category.css";
 function Categories({category_id, category}) {
   const [books, setBooks] = useState([]);
   const [render, setRender] = useState(0);
-
+  const categoryId = category_id
   const renderComponent = () => {
     setRender(render + 1);
   }
@@ -14,7 +15,7 @@ function Categories({category_id, category}) {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/library/books?category_id=${category_id}`,
+      url: `http://localhost:8000/library/books?category_id=${categoryId}`,
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
       }
@@ -22,7 +23,8 @@ function Categories({category_id, category}) {
     .then((res) => {
       setBooks([...res.data.books])
     })
-  },[category_id, render])
+    .catch(err => console.log(err))
+  },[categoryId, render])
 
   return (
     <div>
@@ -31,6 +33,9 @@ function Categories({category_id, category}) {
         <p className="secondary-text">
         You currently have <span>{books.length} </span> 
         {books.length === 1 ? "book" : "books"} for <span> {category} </span> category.</p>
+      </div>
+      <div className="add-sort-container">
+        <FormModal renderComponent={renderComponent}/>
       </div>
       <div className="books-list-container">
         {books.map(({title, author, description, rating, img, category, status}) => 
