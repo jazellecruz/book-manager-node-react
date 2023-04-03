@@ -24,7 +24,7 @@ import {listTheme, addBookTheme, modalStyle, signoutBtn} from "../styles/themes/
 import { kebabCase } from "../helpers/helpers";
 import "../styles/sideNavBar.css"
 
-function SideNavbar() {
+const SideNavbar = () => {
   const [openCategoryList, setOpenCategoryList] = useState(false);
 
   const navigate = useNavigate();
@@ -36,14 +36,13 @@ function SideNavbar() {
 
   const handleSignOut = () => {
     localStorage.removeItem("accessToken");
-    navigate("/")
+    navigate("/");
   }
 
   return (
     <>
       <div className="side-navbar">
         <div className="logo-container">
-          {/* <AutoStoriesRoundedIcon className="logo"/> */}
           <p>booked</p>
         </div>
         <ThemeProvider theme={listTheme}>
@@ -90,7 +89,6 @@ function SideNavbar() {
         <ThemeProvider theme={signoutBtn}>
           <Button variant="contained" onClick={() => handleSignOut()} disableElevation>Sign Out</Button>
         </ThemeProvider>
-        {/* <button onClick={() => handleSignOut()}>Sign Out</button> */}
       </div>
     </>
   );

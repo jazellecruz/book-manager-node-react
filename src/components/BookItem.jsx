@@ -13,8 +13,9 @@ import { kebabCase, trimString } from "../helpers/helpers"
 import { SnackbarContext } from "../contexts/context";
 import "../styles/bookItem.css"
 
-function BookItem({title, author, description, img, rating, category, status, precision, book_id, removeBookFromList, renderComponent}) {
+const BookItem = ({title, author, description, img, rating, category, status, precision, book_id, renderComponent}) => {
   const [openDialogue, setOpenDialogue] = useState(false);
+  const openSnackbar = useContext(SnackbarContext);
 
   const handleOpenDialogue = () => {
     setOpenDialogue(true);
@@ -34,27 +35,26 @@ function BookItem({title, author, description, img, rating, category, status, pr
       })
     .then(res => {
       if(res.status === 200) {
+        renderComponent()
         openSnackbar("success", "Successfully deleted book!")
       }
     })
     .catch(err => {
       openSnackbar("error", `Request failed! Try again later. (Error ${err.response.status})`)
-    })
+    });
   }
-  const openSnackbar = useContext(SnackbarContext);
-  return(
 
-      <div className="book-container">
+ 
+  return(
+    <div className="book-container">
       <div className="book-img-container">
-        <img 
-        src={img} 
-        alt="book-cover"/>
+          <img src={img} alt="book-cover"/>
       </div>
       <div className="book-info-container">
         <p className="book-title">{title}</p>
         <div>
-        <p className="sub-text">{author}</p>
-       <Rating name="simple-controlled" value={rating} size="small" readOnly/>
+          <p className="sub-text">{author}</p>
+          <Rating name="simple-controlled" value={rating} size="small" readOnly/>
         </div>
         <p className="secondary-text">{trimString(description)}</p>
         <div>
@@ -70,40 +70,38 @@ function BookItem({title, author, description, img, rating, category, status, pr
         </div>
       </div>
       <button className="deleteBook-btn" onClick={handleOpenDialogue}>
-          <DeleteOutlineOutlinedIcon />
+        <DeleteOutlineOutlinedIcon />
       </button>
       <div>
-      <Dialog
-        open={openDialogue}
-        onClose={handleCloseDialogue}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Delete this book?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to 
-            <span style={{color: "red"}}> delete </span>
-            <span style={{fontWeight: "bolder"}}>{`"${title}"`}</span>
-            ?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialogue}>Cancel</Button>
-          <Button onClick={() => {
-            handleDelete(book_id)
-            handleCloseDialogue();
-            }} 
-            autoFocus>
-            YES
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        <Dialog
+          open={openDialogue}
+          onClose={handleCloseDialogue}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+          <DialogTitle id="alert-dialog-title">
+            {"Delete this book?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to 
+              <span style={{color: "red"}}> delete </span>
+              <span style={{fontWeight: "bolder"}}>{`"${title}"`}</span>
+              ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialogue}>Cancel</Button>
+            <Button onClick={() => {
+              handleDelete(book_id)
+              handleCloseDialogue();
+              }} 
+              autoFocus>
+              YES
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
-      
+    </div>
   );
 }
 

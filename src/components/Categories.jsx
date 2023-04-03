@@ -5,7 +5,7 @@ import axios from "axios"
 import BookItem from "../components/BookItem";
 import "../styles/category.css";
 
-function Categories({category_id, category}) {
+const Categories = ({category_id, category}) => {
   const [books, setBooks] = useState([]);
   const [render, setRender] = useState(0);
   const categoryId = category_id
@@ -13,16 +13,8 @@ function Categories({category_id, category}) {
 
   const renderComponent = () => {
     setRender(render + 1);
-  }
+  };
 
-  const setNewBooksList = (newEntry) => {
-    setBooks([...books, newEntry])
-  }
-
-  const removeBookFromList = (id) => {
-
-  }
-  
   useEffect(() => {
     axios({
       method: "GET",
@@ -32,40 +24,41 @@ function Categories({category_id, category}) {
       }
     })
     .then((res) => {
-      setBooks([...res.data.books])
+      setBooks([...res.data.books]);
     })
     .catch(err => {
-      if (err.response.status === 401 || err.response.status === 500) {
+      if (err.response.status === 401) {
         navigate("/login");
+      } else if(err.response.status === 500) {
+        navigate("/error");
       }
-      console.log(err);
     })
-  },[categoryId, render])
+  },[categoryId, render]);
 
   return (
     <div>
       <div className="category-box">
         <p>{category}</p>
         <p className="secondary-text">
-        You currently have <span>{books.length} </span> 
-        {books.length === 1 ? "book" : "books"} for <span> {category} </span> category.</p>
+          You currently have <span>{books.length} </span> 
+          {books.length === 1 ? "book" : "books"} for <span> {category} </span> category.</p>
       </div>
       <div className="add-sort-container">
-        <FormModal setNewBooksList={setNewBooksList}/>
+        <FormModal renderComponent={renderComponent}/>
       </div>
       <div className="books-list-container">
         {books.map(({title, author, description, rating, img, category, status}) => 
-        <BookItem 
-          title={title}
-          author={author}
-          description={description}
-          img={img}
-          category={category}
-          rating={rating}
-          status={status}
-          removeBookFromList={removeBookFromList}
-          renderComponent={renderComponent}
-        />)}
+          <BookItem 
+            title={title}
+            author={author}
+            description={description}
+            img={img}
+            category={category}
+            rating={rating}
+            status={status}
+            renderComponent={renderComponent}
+          />
+        )}
       </div>
     </div>
   );

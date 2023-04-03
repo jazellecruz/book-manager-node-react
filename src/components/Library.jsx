@@ -26,10 +26,6 @@ function Library() {
     setRender(render + 1);
   }
 
-  const setNewBooksList = (newEntry) => {
-    setBooks([...books, newEntry])
-  }
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,9 +42,9 @@ function Library() {
     })
     .catch(err => {
       if (err.response.status === 401) {
-        navigate("/login")
+        navigate("/login");
       } else if(err.response.status === 500){
-        console.log(err)
+        navigate("/error");
       }
     })
     
@@ -62,7 +58,7 @@ function Library() {
         in the last {/*insert here the day the user was created then convert to days*/} days.</p>
       </div>
       <div className="add-sort-container">
-      <FormModal setNewBooksList={setNewBooksList}/>
+      <FormModal renderComponent={renderComponent}/>
       </div>
       <div >
         {books.map(book => 
@@ -76,7 +72,6 @@ function Library() {
             img={book.img}
             category={book.category}
             status={book.status}
-            setNewBooksList={setNewBooksList}
             renderComponent={renderComponent}
           />
         )}

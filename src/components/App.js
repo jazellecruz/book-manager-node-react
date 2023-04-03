@@ -5,7 +5,7 @@ import {destroyToken} from "../utils/utils"
 import AppRoutes from "./Routes/AppRoutes";
 import "../styles/global.css";
 
-function App() {
+const App = () => {
   const navigate = useNavigate();
 
   const verifyToken = () => {
@@ -22,13 +22,14 @@ function App() {
         }
       })
       .catch(err => {
-        if(err.response.status === 401) {
+        if(err.response.status === 401 || err.response.status === 404) {
           destroyToken();
           navigate("/login")
-        } 
-        console.log(err)
+        } else if (err.response.status === 500) {
+          navigate("/error")
+        }
       });
-  }
+    }
 
 
   useEffect(() => {
@@ -40,9 +41,7 @@ function App() {
   }, [])
 
   return (
-    <>
-      <AppRoutes />
-    </>
+    <AppRoutes />
   );
 }
 
