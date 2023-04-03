@@ -39,3 +39,25 @@ body::-webkit-scrollbar-thumb {
 p span {
   color: #201e1e;
 }
+
+/* Small components */
+
+.error-section .MuiSvgIcon-root{
+  color: #d45f5f;
+  font-size: 4rem;
+}
+
+.error-section {
+  width: 100%;
+  padding-top: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.error-section .MuiButtonBase-root {
+  background-color: black;
+  width: 10rem;
+}
