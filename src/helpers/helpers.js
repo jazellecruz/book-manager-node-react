@@ -31,7 +31,7 @@ const trimString = (string) => {
 const sanitizeInput = (value, name) => {
   if(!value) return null
 
-  if(name === "category_id" || name === "status_id") {
+  if(name === "category_id" || name === "status_id" || name === "rating") {
     return Number(value)
   } else {
     let string = value.replace(/"/g, "'")
