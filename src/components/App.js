@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import {destroyToken} from "../utils/utils"
 import AppRoutes from "./Routes/AppRoutes";
@@ -7,7 +7,7 @@ import "../styles/global.css";
 
 function App() {
   const navigate = useNavigate();
-  
+
   const verifyToken = () => {
 
     axios({
@@ -29,6 +29,7 @@ function App() {
         console.log(err)
       });
   }
+
 
   useEffect(() => {
     if(!localStorage.getItem("accessToken") ){

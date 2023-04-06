@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import FormModal from "./FormModal.jsx";
 import axios from "axios";
 
@@ -9,6 +10,7 @@ export default function Wishlist() {
   const renderComponent = () => {
     setRender(render + 1);
   }
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
@@ -19,7 +21,12 @@ export default function Wishlist() {
       }
     })
     .then(res => setBooks({...res.data}))
-    .catch(err => console.log(err))
+    .catch(err => {
+      if (err.response.status === 401 || err.response.status === 500) {
+        navigate("/login");
+      }
+      console.log(err);
+    })
   }, [render]);
   
   
