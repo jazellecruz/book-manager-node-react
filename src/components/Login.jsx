@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import "../styles/login.css"
 import { saveToken } from "../utils/utils.js"
+import bookedLogo from "../assets/booked.png"
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -43,6 +44,7 @@ const Login = () => {
 
   return (
     <div className="login-section">
+    <img src={bookedLogo} alt="booked-logo"/>
       <p>Welcome back</p>
       <p>Please enter your details.</p>
       <form onSubmit={(e) => handleSubmit(e)}>
