@@ -46,7 +46,7 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  maxWidth: "100%",
+  width: "43rem",
   maxHeight: "100%",
   bgcolor: 'background.paper',
   borderRadius: "10px",

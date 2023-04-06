@@ -55,3 +55,8 @@
 .login-section p:last-of-type {
   font-size: 15px;
 }
+
+.login-section img {
+  width: 3em;
+  margin-bottom: 4px;
+}
