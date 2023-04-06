@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -10,9 +10,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Rating  from "@mui/material/Rating";
 import Button  from "@mui/material/Button";
 import { kebabCase, trimString } from "../helpers/helpers"
+import { SnackbarContext } from "../contexts/context";
 import "../styles/bookItem.css"
 
-function BookItem({title, author, description, img, rating, category, status, precision, book_id, renderComponent}) {
+function BookItem({title, author, description, img, rating, category, status, precision, book_id, removeBookFromList, renderComponent}) {
   const [openDialogue, setOpenDialogue] = useState(false);
 
   const handleOpenDialogue = () => {
@@ -32,11 +33,15 @@ function BookItem({title, author, description, img, rating, category, status, pr
       }
       })
     .then(res => {
-      renderComponent()
+      if(res.status === 200) {
+        openSnackbar("success", "Successfully deleted book!")
+      }
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      openSnackbar("error", `Request failed! Try again later. (Error ${err.response.status})`)
+    })
   }
-
+  const openSnackbar = useContext(SnackbarContext);
   return(
 
       <div className="book-container">

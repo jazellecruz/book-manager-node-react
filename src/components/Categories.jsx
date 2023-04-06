@@ -1,4 +1,5 @@
 import { useState, useEffect }from "react"; 
+import { useNavigate } from "react-router-dom";
 import FormModal from "./FormModal";
 import axios from "axios"
 import BookItem from "../components/BookItem";
@@ -8,8 +9,18 @@ function Categories({category_id, category}) {
   const [books, setBooks] = useState([]);
   const [render, setRender] = useState(0);
   const categoryId = category_id
+  const navigate = useNavigate();
+
   const renderComponent = () => {
     setRender(render + 1);
+  }
+
+  const setNewBooksList = (newEntry) => {
+    setBooks([...books, newEntry])
+  }
+
+  const removeBookFromList = (id) => {
+
   }
   
   useEffect(() => {
@@ -23,7 +34,12 @@ function Categories({category_id, category}) {
     .then((res) => {
       setBooks([...res.data.books])
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      if (err.response.status === 401 || err.response.status === 500) {
+        navigate("/login");
+      }
+      console.log(err);
+    })
   },[categoryId, render])
 
   return (
@@ -35,7 +51,7 @@ function Categories({category_id, category}) {
         {books.length === 1 ? "book" : "books"} for <span> {category} </span> category.</p>
       </div>
       <div className="add-sort-container">
-        <FormModal renderComponent={renderComponent}/>
+        <FormModal setNewBooksList={setNewBooksList}/>
       </div>
       <div className="books-list-container">
         {books.map(({title, author, description, rating, img, category, status}) => 
@@ -47,6 +63,7 @@ function Categories({category_id, category}) {
           category={category}
           rating={rating}
           status={status}
+          removeBookFromList={removeBookFromList}
           renderComponent={renderComponent}
         />)}
       </div>

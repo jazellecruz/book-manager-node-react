@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {ThemeProvider, 
         Button, 
@@ -25,6 +26,12 @@ function Library() {
     setRender(render + 1);
   }
 
+  const setNewBooksList = (newEntry) => {
+    setBooks([...books, newEntry])
+  }
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios({
       method: "GET",
@@ -38,7 +45,11 @@ function Library() {
       settotalOfFinishedBooks(result.data.totalOfFinishedBooks)
     })
     .catch(err => {
-      console.log(err)
+      if (err.response.status === 401) {
+        navigate("/login")
+      } else if(err.response.status === 500){
+        console.log(err)
+      }
     })
     
   }, [render]);
@@ -51,7 +62,7 @@ function Library() {
         in the last {/*insert here the day the user was created then convert to days*/} days.</p>
       </div>
       <div className="add-sort-container">
-      <FormModal renderComponent={renderComponent}/>
+      <FormModal setNewBooksList={setNewBooksList}/>
       </div>
       <div >
         {books.map(book => 
@@ -65,6 +76,7 @@ function Library() {
             img={book.img}
             category={book.category}
             status={book.status}
+            setNewBooksList={setNewBooksList}
             renderComponent={renderComponent}
           />
         )}
