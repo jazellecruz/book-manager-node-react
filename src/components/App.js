@@ -12,7 +12,7 @@ const App = () => {
 
     axios({
       method: "post",
-      url: "http://localhost:8000/auth/verify",
+      url: "https://booked-api.vercel.app/auth/verify",
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
       }})

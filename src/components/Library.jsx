@@ -31,7 +31,7 @@ function Library() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8000/library/books",
+      url: "https://booked-api.vercel.app/library/books",
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
       }

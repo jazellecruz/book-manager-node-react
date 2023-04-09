@@ -38,7 +38,7 @@ const Login = () => {
     e.preventDefault();
     axios({
       method: "post",
-      url: "http://localhost:8000/auth/login",
+      url: "https://booked-api.vercel.app/auth/login",
       data: credentials,
     })
     .then(res => {

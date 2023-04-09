@@ -35,7 +35,7 @@ const Dashboard = () => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8000/library/categories",
+      url: "https://booked-api.vercel.app/library/categories",
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
       }

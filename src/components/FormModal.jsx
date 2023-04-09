@@ -61,7 +61,7 @@ const FormModal = ({renderComponent}) => {
 
     axios({
       method: "POST",
-      url: "http://localhost:8000/library/books",
+      url: "https://booked-api.vercel.app/library/books",
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         "x-access-token": localStorage.getItem("accessToken")
@@ -97,7 +97,7 @@ const FormModal = ({renderComponent}) => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8000/library/status",
+      url: "https://booked-api.vercel.app/library/status",
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
       }

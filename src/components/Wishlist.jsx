@@ -15,7 +15,7 @@ const Wishlist = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:8000/library/books?status_id=4",
+      url: "https://booked-api.vercel.app/library/books?status_id=4",
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
       }

@@ -28,7 +28,7 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
   const handleDelete = (book_id) => {
     axios({
       method: "delete",
-      url: `http://localhost:8000/library/books/${book_id}`,
+      url: `https://booked-api.vercel.app/library/books/${book_id}`,
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
       }
