@@ -1,16 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {ThemeProvider, 
-        Button, 
-        Modal, 
-        Typography, 
-        Box,
-        InputLabel,
-        Select,
-        MenuItem,
-        FormControl
-        } from "@mui/material"
 import BookItem from './BookItem';
 import FormModal from "../components/FormModal";
 import { getPrecision } from "../helpers/helpers";
@@ -18,9 +8,8 @@ import "../styles/library.css";
 
 function Library() {
   const [books, setBooks] = useState([]);
-  const [totalOfFinishedBooks, settotalOfFinishedBooks] = useState()
+  const [totalOfFinishedBooks, setTotalOfFinishedBooks] = useState()
   const [render, setRender] = useState(0)
-  const [sortBy, setSortBy] = useState('Default');
 
   const renderComponent = () => {
     setRender(render + 1);
@@ -38,7 +27,7 @@ function Library() {
     })
     .then((result) => {
       setBooks([...result.data.books])
-      settotalOfFinishedBooks(result.data.totalOfFinishedBooks)
+      setTotalOfFinishedBooks(result.data.totalOfFinishedBooks)
     })
     .catch(err => {
       if (err.response.status === 401) {

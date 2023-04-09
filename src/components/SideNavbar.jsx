@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "../styles/sideNavBar.css"
 import { List, 
          ListItemButton, 
@@ -9,18 +8,13 @@ import { List,
          ListItemIcon,
          ListItemText,
          Button,
-         Modal,
-         Box,
-         Typography,
-         Avatar,
          ThemeProvider} from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
-import AutoStoriesRoundedIcon from '@mui/icons-material/AutoStoriesRounded';
 import { CategoriesContext } from "../contexts/context";
-import {listTheme, addBookTheme, modalStyle, signoutBtn} from "../styles/themes/themes";
+import {listTheme, signoutBtn} from "../styles/themes/themes";
 import { kebabCase } from "../helpers/helpers";
 import "../styles/sideNavBar.css"
 
