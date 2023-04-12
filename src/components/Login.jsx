@@ -51,7 +51,7 @@ const Login = () => {
       navigate("/");
     })
     .catch(err => {
-      if(!err.response.status | !err.response) {
+      if(!err.response.status || !err.response) {
          setError({message: "An error occured. Please try again later."})
       } else {
         if(err.response.status === 401 || err.response.status === 404) {
