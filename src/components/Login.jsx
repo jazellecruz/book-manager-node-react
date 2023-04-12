@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-import "../styles/login.css"
+import Loading from "./Loading";
 import { saveToken } from "../utils/utils.js"
+import "../styles/login.css"
 import bookedLogo from "../assets/booked.png"
 import {Snackbar, Alert} from "@mui/material";
 
 const Login = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const [error, setError] = useState({
     message: "",
@@ -36,28 +38,55 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
     axios({
       method: "post",
       url: "https://booked-api.vercel.app/auth/login",
       data: credentials,
+      headers:  {'Content-Type': 'application/json'}
     })
     .then(res => {
+      setLoading(false);
       saveToken(res.data.accessToken);
       navigate("/");
     })
     .catch(err => {
-      if (err.response.status === 401 || err.response.status === 404) {
-        setError({
+      if(!err.response.status | !err.response) {
+         setError({message: "An error occured. Please try again later."})
+      } else {
+        if(err.response.status === 401 || err.response.status === 404) {
+          setError({
           message: "Invalid user credentials.",
           status: err.response.status
-        })
-      } else if (err.response.status === 500) {
-        setError({
-          message: "Internal Error in Server. Try again later.",
-          status: err.response.status
-        });
+          })
+        } else {
+          setError({
+            message: "Internal Error in Server. Try again later.",
+            status: err.response.status
+          });
+        }
       }
+
+      // console.log(err)
+      // if(err.code === "ERR_NETWORK") {
+      //   setError({message: "An error occured. Please try again later."})
+      // } else {
+      //   return
+      // }
+
+      // if (err.response.status === 401 || err.response.status === 404) {
+      //   setError({
+      //     message: "Invalid user credentials.",
+      //     status: err.response.status
+      //   })
+      // } else if (err.response.status === 500) {
+      //   setError({
+      //     message: "Internal Error in Server. Try again later.",
+      //     status: err.response.status
+      //   });
+      // }
       setOpenSnackbar(true);
+      setLoading(false)
     });
 
     setCredentials({
@@ -97,7 +126,7 @@ const Login = () => {
               required>
             </input>
           </div>
-          <button type="submit" className="login-btn login-input">Login</button>
+          <button type="submit" className="login-btn login-input">{loading ? <Loading /> : "Login"}</button>
         </form>
       </div>
       {openSnackbar && 
