@@ -43,17 +43,20 @@ const Login = () => {
       method: "post",
       url: "https://booked-api.vercel.app/auth/login",
       data: credentials,
-      headers:  {'Content-Type': 'application/json'}
+      withCredentials: true
     })
     .then(res => {
       setLoading(false);
       saveToken(res.data.accessToken);
       navigate("/");
+      setCredentials({
+        username: "",
+        password: ""
+      });
     })
     .catch(err => {
-      if(!err.response.status || !err.response) {
-         setError({message: "An error occured. Please try again later."})
-      } else {
+      console.log(err)
+      if(err.response) {
         if(err.response.status === 401 || err.response.status === 404) {
           setError({
           message: "Invalid user credentials.",
@@ -61,10 +64,12 @@ const Login = () => {
           })
         } else {
           setError({
-            message: "Internal Error in Server. Try again later.",
+            message: "Error in Server. Try again later.",
             status: err.response.status
           });
         }
+      } else {
+        setError({message: "An error occured. Please try again later."})
       }
 
       // console.log(err)
@@ -85,14 +90,15 @@ const Login = () => {
       //     status: err.response.status
       //   });
       // }
+      setLoading(false);
       setOpenSnackbar(true);
-      setLoading(false)
+      setCredentials({
+        username: "",
+        password: ""
+      });
     });
 
-    setCredentials({
-      username: "",
-      password: ""
-    });
+
   }
 
   return (

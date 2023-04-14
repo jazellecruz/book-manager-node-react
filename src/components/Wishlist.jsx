@@ -18,7 +18,8 @@ const Wishlist = () => {
       url: "https://booked-api.vercel.app/library/books?status_id=4",
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
-      }
+      },
+      withCredentials: true
     })
     .then(res => setBooks([...res.data]))
     .catch(err => {

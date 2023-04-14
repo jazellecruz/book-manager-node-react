@@ -18,10 +18,11 @@ const Categories = ({category_id, category}) => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/library/books?category_id=${categoryId}`,
+      url: `https://booked-api.vercel.app/library/books?category_id=${categoryId}`,
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
-      }
+      },
+      withCredentials: true
     })
     .then((res) => {
       setBooks([...res.data.books]);
@@ -29,7 +30,7 @@ const Categories = ({category_id, category}) => {
     .catch(err => {
       if (err.response.status === 401) {
         navigate("/login");
-      } else if(err.response.status === 500) {
+      } else {
         navigate("/error");
       }
     })

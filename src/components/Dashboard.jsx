@@ -38,13 +38,14 @@ const Dashboard = () => {
       url: "https://booked-api.vercel.app/library/categories",
       headers: {
         "x-access-token": localStorage.getItem("accessToken")
-      }
+      },
+      withCredentials: true
     })
     .then(res => setCategoriesList([...res.data]))
     .catch(err => {
-      if (err.response.status === 401 || err.response.status === 401) {
+      if (err.response.status === 401) {
         navigate("/login");
-      } else if(err.response.status === 500) {
+      } else {
         navigate("/error");
       }
     });
