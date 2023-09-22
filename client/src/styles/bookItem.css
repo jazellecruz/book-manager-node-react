@@ -1,0 +1,67 @@
+
+.book-container {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  width: 70%;
+  padding: 20px;
+  margin: 0 0 32px;
+  /* background-color: #404258; */
+  border-radius: 10px;
+  border: 2px solid rgb(214, 214, 214);
+}
+.book-img-container img{
+  width: 120px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.book-title{
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.book-info-container div{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sub-text {
+  font-weight: 400;
+  font-style: italic;
+}
+
+p {
+  margin-top: 1px;
+}
+
+.finished {
+  color: #0E91A1;
+}
+
+.currently-reading{
+  color: #55aa7a;
+}
+
+.to-be-read {
+  color: #c79800;
+}
+
+.deleteBook-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background-color: inherit;
+  color: #929292;
+}
+
+.deleteBook-btn:hover {
+  color: #F55050;
+}
+
+.MuiDialog-Paper {
+  font-family: inherit;
+}

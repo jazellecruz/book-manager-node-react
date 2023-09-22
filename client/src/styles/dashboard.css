@@ -1,0 +1,16 @@
+.dashboard-root {
+  display: grid;
+  grid-template-columns: 19% 80%;
+  background-color: inherit;
+}
+
+.sideNavBar-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+}
+
+.main-content-container{
+  padding: 28px;
+}

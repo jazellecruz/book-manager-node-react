@@ -1,0 +1,9 @@
+
+.category-box p:first-of-type{
+  font-size: 60px;
+  font-weight: 600;
+}
+
+p span {
+  font-weight: 600;
+}
