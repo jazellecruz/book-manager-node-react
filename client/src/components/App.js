@@ -4,6 +4,7 @@ import axios from "axios"
 import {destroyToken} from "../utils/utils"
 import AppRoutes from "./Routes/AppRoutes";
 import "../styles/global.css";
+import "../styles/styles.css";
 
 
 const App = () => {
@@ -42,7 +43,9 @@ const App = () => {
   // }, [])
 
   return (
-    <AppRoutes />
+    <main>
+      <AppRoutes />
+    </main>
   );
 }
 

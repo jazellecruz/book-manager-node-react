@@ -77,7 +77,7 @@ function Library() {
     <div>
       <HeaderBar />
       <ControlTabs setCategory={setCategory}/>
-      <div>
+      <div className="books-container">
         {books.map(book => {
           return <BookItem 
             book_id={book.book_id}
