@@ -1,9 +1,9 @@
 
-.book-container {
+.book-item {
   position: relative;
   display: flex;
   gap: 16px;
-  width: 70%;
+  width: 80%;
   padding: 20px;
   margin: 0 0 32px;
   /* background-color: #404258; */

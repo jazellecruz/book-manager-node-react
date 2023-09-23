@@ -46,7 +46,7 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
 
  
   return(
-    <div className="book-container">
+    <div className="book-item">
       <div className="book-img-container">
           <img src={img} alt="book-cover"/>
       </div>
