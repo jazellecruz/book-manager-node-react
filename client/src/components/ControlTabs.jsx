@@ -32,7 +32,7 @@ const ControlTabs = ({setCategory}) => {
         </select>
       </div>
       <div>
-        <button>Add Book</button>
+        <button className="add-book-btn">Add Book</button>
       </div>
     </div>
   )
