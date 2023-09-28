@@ -15,12 +15,12 @@ app.get("/books", async(req, res) => {
   res.send(response.data);
 });
 
-app.post("/categories", async(req, res) => {
+app.get("/categories", async(req, res) => {
   let response = await axios(`http://localhost:8000/categories`);
   res.send(response.data);
 });
 
-app.get("/categories", async(req, res) => {
+app.post("/categories", async(req, res) => {
 
 });
 
