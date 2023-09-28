@@ -14,10 +14,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 6px 0;
+  box-sizing: border-box;
+  margin: 0 0 20px 0;
 }
 
 main {
-  width: 1200px;
+  width: 1000px;
   margin: 0 auto;
 }
 
@@ -49,15 +52,37 @@ main {
 }
 
 select{
-  border: 1px solid rgb(185, 178, 178);
-  border-radius: 4px;
-  width: 100px;
-  height: 30px;
+  border: 1px solid rgb(151, 151, 151);
+  border-radius: 6px;
+  height: 44px;
+  padding:0 4px;
+  font-size: 14px;
 }
+
+select.sort-by{
+  width: 120px;
+}
+
+select.category{
+  width: 220px;
+}
+
 
 .add-book-btn{
   background-color: #4d5b9a;
   border: 0;
   color: white;
+  height: 40px;
+  padding: 0 24px;
+  font-size: 14px;
+  border-radius: 4px;
 }
+
+select:focus{
+  border: 3px solid;
+  border-color: #7382c9;
+}
+
+
+
 

@@ -60,3 +60,8 @@ p span {
   background-color: black;
   width: 10rem;
 }
+
+.divider{
+  border-top: 2px solirgb(172, 172, 172)75;
+  width: 100%;
+}
