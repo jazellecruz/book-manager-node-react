@@ -46,6 +46,7 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
 
  
   return(
+    <>
     <div className="book-item">
       <div className="book-img-container">
           <img src={img} alt="book-cover"/>
@@ -62,7 +63,6 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
             <span className="sub-text">Status:</span> 
             <span className={kebabCase(status)}> {status}</span>
           </p>
-          <span>|</span>
           <p>
             <span className="sub-text">Category:</span> 
             <span> <Link to={`../categories/${kebabCase(category)}`}>{category}</Link></span>
@@ -102,6 +102,8 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
         </Dialog>
       </div>
     </div>
+    <hr className="divider" />
+    </>
   );
 }
 
