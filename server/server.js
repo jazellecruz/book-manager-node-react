@@ -15,6 +15,10 @@ app.get("/books", async(req, res) => {
   res.send(response.data);
 });
 
+app.post("/books", (req, res) => {
+  console.log(req.query)
+});
+
 app.get("/categories", async(req, res) => {
   let response = await axios(`http://localhost:8000/categories`);
   res.send(response.data);
@@ -25,7 +29,8 @@ app.post("/categories", async(req, res) => {
 });
 
 app.get("/status", async(req, res) => {
-
+  let response = await axios("http://localhost:8000/status");
+  res.send(response.data);
 });
 
 app.post("/reviews", async(req, res) => {
