@@ -52,7 +52,7 @@ main {
 }
 
 select{
-  border: 1px solid rgb(151, 151, 151);
+  border: 1px solid #979797;
   border-radius: 6px;
   height: 44px;
   padding:0 4px;
@@ -76,6 +76,11 @@ select.category{
   padding: 0 24px;
   font-size: 14px;
   border-radius: 4px;
+  transition: .2s ease-in-out;
+}
+
+.add-book-btn:hover{
+  background-color: #353f6b;
 }
 
 select:focus{

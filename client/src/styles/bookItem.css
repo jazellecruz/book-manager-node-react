@@ -9,7 +9,8 @@
   margin: 2px 0;
   /* background-color: #404258; */
   border-radius: 10px;
-  /* border: 2px solid rgb(214, 214, 214); */
+  border: 1px solid #979797;
+  margin-bottom: 32px;
 }
 .book-img-container img{
   width: 120px;

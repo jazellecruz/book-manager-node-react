@@ -10,12 +10,13 @@ import "../styles/library.css";
 
 function Library() {
   const [books, setBooks] = useState([]);
-  const [totalOfFinishedBooks, setTotalOfFinishedBooks] = useState()
-  const [render, setRender] = useState(0)
+  const [categories, setCategories] = useState([]);
+  const [bookCategory, setBookCategory] = useState([]);
+  const [status, setStatus] = useState([]);
+  const [totalOfFinishedBooks, setTotalOfFinishedBooks] = useState();
+  const [openFormModal, setOpenFormModal] = useState(false);
+  const [render, setRender] = useState(0);
 
-  const setCategory = () => {
-
-  }
 
   const renderComponent = () => {
     setRender(render + 1);
@@ -23,19 +24,37 @@ function Library() {
 
   const navigate = useNavigate();
 
+  const openBookForm = () => {
+    setOpenFormModal(true);
+  }
+
+  const handleSetCategory = (e) => {
+
+  }
+
+  const apiCalls = [
+    fetch("/books")
+    .then(res => res.json())
+    .then(res => {
+      setBooks([...res.books]);
+      setTotalOfFinishedBooks(books.totalOfFinishedBooks);
+    }),
+    fetch("/categories")
+    .then(res => res.json())
+    .then(res => {
+      setCategories([...res]);
+    }),
+    fetch("/status")
+    .then(res => res.json())
+    .then(res => {
+      setStatus([...res]);
+    })
+  ]
+
 
   useEffect( () => {
-      fetch("/books", {
-        headers: {
-          "x-access-token": localStorage.getItem("accessToken")
-        }
-      })
-      .then(res => res.json())
-      .then(res => {
-        setBooks([...res.books]);
-        setTotalOfFinishedBooks(books.totalOfFinishedBooks);
-      })
-      .catch(err => console.log(err));
+    Promise.all(apiCalls)
+    .catch(err => console.log(err));
   }, [render]);
 // {/* <div>
 //       <div className="greet-box">
@@ -67,7 +86,12 @@ function Library() {
   return (
     <div>
       <HeaderBar />
-      <ControlTabs setCategory={setCategory}/>
+      <ControlTabs 
+      handleSetCategory={handleSetCategory}
+      status={status}
+      categories={categories}
+      openBookForm={openBookForm}
+      />
       <div className="books-container">
         {books.map(book => {
           return <BookItem 
