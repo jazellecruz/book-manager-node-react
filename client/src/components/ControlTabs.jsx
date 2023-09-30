@@ -1,56 +1,9 @@
 import {useEffect, useState} from 'react'
 import "../styles/styles.css";
 
-// const categories = [
-//   {
-//     id: 1,
-//     category: "Academic"
-//   }, 
-//   {
-//     id: 2,
-//     category: "Fiction"
-//   },
-//   {
-//     id: 3,
-//     category: "Religion and Spirituality"
-//   },
-
-// ]
-
-const status = [
-  {
-    id: 1,
-    status: "Finished"
-  }, 
-  {
-    id: 2,
-    status: "Currently Reading"
-  },
-  {
-    id: 3,
-    status: "To Be Read"
-  },
-  {
-    id: 4,
-    status: "Wishlist"
-  }
-]
-
 const sort = ["A-Z", "Latest", "Oldest", ]
 
-const ControlTabs = ({setCategory}) => {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetch("/categories")
-    .then(res => res.json())
-    .then(res => {
-      console.log(res)
-      setCategories([...res]);
-    })
-    .catch();
-
-  }, []);
+const ControlTabs = ({handleSetCategory, status, categories, openBookForm}) => {
 
   return (
     <div className="control-tab">
@@ -75,7 +28,7 @@ const ControlTabs = ({setCategory}) => {
         </select>
       </div>
       <div>
-        <button className="add-book-btn">Add Book</button>
+        <button className="add-book-btn" onClick={() => openBookForm()}>Add Book</button>
       </div>
     </div>
   )
