@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react'
 import "../styles/styles.css";
+import BookForm from './BookForm';
 
 const sort = ["A-Z", "Latest", "Oldest", ]
 
-const ControlTabs = ({handleSetCategory, status, categories, openBookForm}) => {
+const ControlTabs = ({handleSetCategory, statusList, categoriesList, openBookForm}) => {
 
   return (
     <div className="control-tab">
@@ -16,19 +17,19 @@ const ControlTabs = ({handleSetCategory, status, categories, openBookForm}) => {
         </select>
         <select className="category">
           <option value="" disabled selected hidden>Category</option>
-          {categories.map(category => {
+          {categoriesList.map(category => {
             return <option value={category.id}>{category.category}</option>
           })}
         </select>
         <select className="status">
           <option value="" disabled selected hidden>Status</option>
-          {status.map(status=> {
+          {statusList.map(status=> {
             return <option value={status.id}>{status.status}</option>
           })}
         </select>
       </div>
       <div>
-        <button className="add-book-btn" onClick={() => openBookForm()}>Add Book</button>
+        <BookForm categoriesList={categoriesList} statusList={statusList} />
       </div>
     </div>
   )
