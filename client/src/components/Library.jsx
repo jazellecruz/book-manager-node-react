@@ -10,9 +10,9 @@ import "../styles/library.css";
 
 function Library() {
   const [books, setBooks] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
   const [bookCategory, setBookCategory] = useState([]);
-  const [status, setStatus] = useState([]);
+  const [statusList, setStatusList] = useState([]);
   const [totalOfFinishedBooks, setTotalOfFinishedBooks] = useState();
   const [openFormModal, setOpenFormModal] = useState(false);
   const [render, setRender] = useState(0);
@@ -42,12 +42,12 @@ function Library() {
     fetch("/categories")
     .then(res => res.json())
     .then(res => {
-      setCategories([...res]);
+      setCategoriesList([...res]);
     }),
     fetch("/status")
     .then(res => res.json())
     .then(res => {
-      setStatus([...res]);
+      setStatusList([...res]);
     })
   ]
 
@@ -88,8 +88,8 @@ function Library() {
       <HeaderBar />
       <ControlTabs 
       handleSetCategory={handleSetCategory}
-      status={status}
-      categories={categories}
+      statusList={statusList}
+      categoriesList={categoriesList}
       openBookForm={openBookForm}
       />
       <div className="books-container">
