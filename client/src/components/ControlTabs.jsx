@@ -1,15 +1,12 @@
-import {useEffect, useState} from 'react'
-import "../styles/styles.css";
 import BookForm from './BookForm';
 
 const sort = ["A-Z", "Latest", "Oldest", ]
 
-const ControlTabs = ({handleSetCategory, statusList, categoriesList, openBookForm}) => {
-
+const ControlTabs = ({statusList, categoriesList, updateAndRefreshView, updateSnackbarType, showSnackbar}) => {
   return (
     <div className="control-tab">
       <div>
-        <select className="sort-by" onChange={(e) => console.log(e.target.value)}>
+        <select className="sort-by">
           <option value="" disabled selected hidden>Sort by</option>
           {sort.map(sort => {
             return <option value={sort}>{sort}</option>
@@ -18,7 +15,7 @@ const ControlTabs = ({handleSetCategory, statusList, categoriesList, openBookFor
         <select className="category">
           <option value="" disabled selected hidden>Category</option>
           {categoriesList.map(category => {
-            return <option value={category.id}>{category.category}</option>
+            return <option value={category.category_no}>{category.category_name}</option>
           })}
         </select>
         <select className="status">
@@ -29,7 +26,13 @@ const ControlTabs = ({handleSetCategory, statusList, categoriesList, openBookFor
         </select>
       </div>
       <div>
-        <BookForm categoriesList={categoriesList} statusList={statusList} />
+        <BookForm 
+          categoriesList={categoriesList} 
+          statusList={statusList} 
+          updateAndRefreshView={updateAndRefreshView}
+          showSnackbar={showSnackbar}
+          updateSnackbarType={updateSnackbarType}
+        />
       </div>
     </div>
   )

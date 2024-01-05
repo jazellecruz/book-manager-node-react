@@ -1,12 +1,27 @@
 import React from 'react'
-import AccountIcon from "../assets/5987424.png";
-import "../styles/styles.css";
+import "../styles/header.css";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const HeaderBar = () => {
+const HeaderBar = ({showSnackbar, updateSnackbarType}) => {
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try{
+      const response = await axios({url: "/auth/logout", withCredentials: true});
+      navigate("/login");
+    } catch(err) {
+      if (err.response.status === 401) return navigate("/login");
+
+      updateSnackbarType("error", "An error occured. Try again later.");
+      showSnackbar();
+    }
+  }
+
   return (
     <div className="header-bar">
       <p className="header-name">Booked<span className="period"></span></p>
-      <div>
+      <div onClick={() => logout()}>
         <svg className="user-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"/>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
@@ -17,4 +32,4 @@ const HeaderBar = () => {
   )
 }
 
-export default HeaderBar
+export default HeaderBar;

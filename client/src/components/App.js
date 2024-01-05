@@ -1,51 +1,47 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
-import {destroyToken} from "../utils/utils"
-import AppRoutes from "./Routes/AppRoutes";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Library from "./Library";
+import Login from "./Login";
+import Error from "./Error";
+import ProtectedRoute from "./ProtectedRoute";
+import axios from "axios";
 import "../styles/global.css";
-import "../styles/styles.css";
-
 
 const App = () => {
-  // const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
-  // const verifyToken = () => {
+  const verifyToken = async () => {
+    try{
+      let res = await axios({url: "/auth/verify", withCredentials: true});
+      if(res.status === 200) {
+        setIsAuthenticated(true);
+      }
+    } catch(err) {
+      if (err.response.status === 401) {
+        return navigate("/login");
+      } 
+      
+      return navigate("/error");
+    }
+  }
 
-  //   axios({
-  //     method: "post",
-  //     url: "http://localhost:8000/auth/verify",
-  //     headers: {
-  //       "x-access-token": localStorage.getItem("accessToken")
-  //     }})
-  //     .then(res => {
-  //       if (res.data.status === 200) {
-  //         navigate("/dashboard/library")
-  //       }
-  //     })
-  //     .catch(err => {
-  //       if(err.response.status === 401 || err.response.status === 404) {
-  //         destroyToken();
-  //         navigate("/login")
-  //       } else if (err.response.status === 500) {
-  //         navigate("/error")
-  //       }
-  //     });
-  //   }
-
-
-  // useEffect(() => {
-  //   if(!localStorage.getItem("accessToken") ){
-  //     navigate("/login");
-  //   } else {
-  //     verifyToken();
-  //   }
-  // }, [])
+  useEffect(() => { 
+    verifyToken(); 
+  }, []);
 
   return (
     <main>
-      <AppRoutes />
-    </main>
+      <Routes>
+        <Route exact path="/" element={<Navigate to="library" />  } />
+        <Route path="login" element={<Login />} />
+        <Route path="login" 
+          element={<ProtectedRoute component={<Login />} isAuthneticated={isAuthenticated}/> } />
+        <Route path="error" element={<Error />} />
+        <Route path="library" element={<Library />} />
+      </Routes>
+    </main>               
   );
 }
 

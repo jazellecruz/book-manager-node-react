@@ -1,14 +1,13 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {Modal, Box, Rating } from "@mui/material"
-import {modalStyle} from "../styles/themes/themes"
-import { SnackbarContext } from "../contexts/context";
-import { sanitizeInput } from "../helpers/helpers"
-import "../styles/form.css"
+import { Modal, Box, TextField } from "@mui/material";
+import { modalStyle } from "../styles/themes/themes";
+import { sanitizeInput } from "../helpers/helpers";
+import "../styles/bookForm.css";
 
-
-const BookForm = ({categoriesList, statusList}) => {
+const BookForm = ({categoriesList, statusList, updateAndRefreshView, showSnackbar, updateSnackbarType}) => {
+  const navigate = useNavigate();
   const [openBookForm, setOpenBookForm] = useState(false);
   const [rating, setRating] = useState(null);
   const [entry, setEntry] = useState({
@@ -21,9 +20,6 @@ const BookForm = ({categoriesList, statusList}) => {
     rating: rating,
     review: null
   });
-  const navigate = useNavigate();
-  
-  const openSnackbar = useContext(SnackbarContext);
 
   const emptyEntry = () => {
     setEntry({
@@ -37,11 +33,6 @@ const BookForm = ({categoriesList, statusList}) => {
     setRating(null);
   };
 
-  const handleCancel = () => {
-    emptyEntry();
-    handleCloseBookFormClick();
-  }
-
   const handleChange = (e) => {
     let { name, value } = e.target;
     setEntry({
@@ -50,57 +41,53 @@ const BookForm = ({categoriesList, statusList}) => {
     });
   }
 
-  const handleSubmit = (e) => {
+  const submitBook = async(e) => {
     e.preventDefault();
 
-    axios({
-      method: "POST",
-      url: "https://booked-api.vercel.app/library/books",
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        "x-access-token": localStorage.getItem("accessToken")
-      },
-      data: {
-        title: entry.title,
-        author: entry.author,
-        description: entry.description,
-        img: entry.img,
-        category_id: entry.category_id,
-        status_id: entry.status_id,
-        rating: entry.rating,
-        review: entry.review
-      }
-    })
-    .then(res => {
-      if(res.status === 200) {
-        handleCancel();
-        openSnackbar("success", "Successfully Saved!")
-      }
-    })
-    .catch(err => {
-      if (err.response.status === 401) {
-        navigate("/login");
-      } else  {
-        handleCancel();
-        openSnackbar("error", `Request failed! Try again later. (Error ${err.response.status})`)
-      }
-    });
-  }
+    try{
+      let response = await axios({
+        method: "POST",
+        url: "/books",
+        data: {
+          title: entry.title,
+          author: entry.author,
+          description: entry.description,
+          img: entry.img,
+          category_id: entry.category_id,
+          status_id: entry.status_id,
+        },
+        withCredentials: true
+      });
 
-  const handleOpenBookFormClick = () => {
+      updateAndRefreshView();
+      updateSnackbarType("success", "Successfully added book!");
+    } catch (err) {
+      if(err.response.status === 401) return navigate("/login");
+
+      updateSnackbarType("error", "An error occurred. Try again later.");
+    } finally {
+      // ensures that book entry is emptied regardless of response
+      emptyEntry();
+      closeBookForm();
+      showSnackbar();
+    }
+  } 
+
+  const showBookForm = () => {
+    setOpenBookForm(!openBookForm);
+  };
+
+  const closeBookForm = () => {
     setOpenBookForm(!openBookForm)
   };
 
-  const handleCloseBookFormClick = () => {
-    setOpenBookForm(!openBookForm)
-  };
   return (
     <div>
-      <button className="add-book-btn" onClick={handleOpenBookFormClick}>Add Book</button>
-      <Modal open={openBookForm} onClose={handleCloseBookFormClick}>
+      <button className="add-book-btn" onClick={showBookForm}>Add Book</button>
+      <Modal open={openBookForm} onClose={closeBookForm}>
         <Box sx={modalStyle}>
           <h3>Add a new book</h3>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submitBook}>
             <div className="input-group"> 
               <div className="input-container">
                 <label for="title">Title:</label>
@@ -124,8 +111,8 @@ const BookForm = ({categoriesList, statusList}) => {
                 <label for="category_id">Category:</label>
                 <select className="input-border" name="category_id" value={entry.category_id} onChange={(e)=> handleChange(e)} >
                   <option value="" disabled selected>Select a category</option>
-                    {categoriesList.map(({ category, category_id}) =>
-                      <option value={category_id}>{category}</option>)
+                    {categoriesList.map(({ category_no, category_name}) =>
+                      <option value={category_no}>{category_name}</option>)
                     }
                 </select>
               </div>
@@ -133,31 +120,18 @@ const BookForm = ({categoriesList, statusList}) => {
                 <label for="status_id">Status:</label>
                 <select className="input-border" name="status_id" placeholder="status" onChange={(e)=> handleChange(e)} value={entry.status_id}>
                   <option value="" disabled selected>Select a status</option>
-                    {statusList.map(({ status_id, status}) =>
-                      <option value={status_id}>{status}</option>)
+                    {statusList.map(({ status_no, status}) =>
+                      <option value={status_no}>{status}</option>)
                     }
                 </select>
               </div>
-            </div>
-            <div className="input-container">
-              <label>Rating:</label>
-              <Rating name="rating" value={rating}
-                onChange={(e, newValue) => {
-                  setRating(newValue);
-                  handleChange(e);
-                }}
-              />
-            </div>
-            <div className="input-container">
-              <label for="review">Review:</label>
-              <textarea className="input-border review" value={entry.review} name="review" onChange={(e)=> handleChange(e)}></textarea>
             </div>
             <div className="form-btn-container">
               <button type="submit" className="submit-btn">Submit</button>
               <button type="button" className="cancel-btn" 
                 onClick={() => {    
                   emptyEntry();
-                  handleCloseBookFormClick();
+                  closeBookForm();
                 }}>Cancel</button>
             </div>
           </form>
@@ -165,7 +139,6 @@ const BookForm = ({categoriesList, statusList}) => {
       </Modal>
     </div>
   );
-
 }
 
 export default BookForm;

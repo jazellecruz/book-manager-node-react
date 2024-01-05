@@ -9,9 +9,9 @@ const Error = () => {
     <div className="error-section">
       <SentimentVeryDissatisfiedIcon />
       <p>An error occurred in the server. Please try again later.</p>
-      <Button onClick={() => navigate("/login")} variant="contained" disableRipple disableElevation>
-        Go to Login Page
-      </Button>
+      {/* <Button onClick={() => navigate("/library")} variant="contained" disableRipple disableElevation>
+        Go Home
+      </Button> */}
     </div>
   );
 }

@@ -1,5 +1,8 @@
 
 const kebabCase = (string) => {
+  if(!string) {
+    return "";
+  }
   let modifiedString = string.toLowerCase().replace(/ /g, "-")
   return modifiedString
 }
@@ -15,10 +18,10 @@ const trimString = (string) => {
   let trimmedString
   if(string) {
 
-    if(string.length < 261){
+    if(string.length < 200){
       trimmedString = string
     } else {
-      trimmedString = `${string.slice(0, 261)}...`
+      trimmedString = `${string.slice(0, 200)}...`
     }
     
   } else{

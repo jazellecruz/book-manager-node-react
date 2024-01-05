@@ -2,98 +2,84 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BookItem from './BookItem';
-import FormModal from "../components/FormModal";
 import ControlTabs from "./ControlTabs";
 import HeaderBar from "./HeaderBar";
+import Loading from "./Loading";
 import { getPrecision } from "../helpers/helpers";
-import "../styles/library.css";
+import {categories, status} from "../constants/index";
+import { Snackbar, Alert } from "@mui/material";
+// import "../styles/library.css";
 
 function Library() {
+  const categoriesList = categories;
+  const statusList = status;
+  const navigate = useNavigate(); 
   const [books, setBooks] = useState([]);
-  const [categoriesList, setCategoriesList] = useState([]);
-  const [bookCategory, setBookCategory] = useState([]);
-  const [statusList, setStatusList] = useState([]);
-  const [totalOfFinishedBooks, setTotalOfFinishedBooks] = useState();
-  const [openFormModal, setOpenFormModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [render, setRender] = useState(0);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarType, setSnackbarType] = useState({
+    severity: "",
+    message: "",
+    statusCode: ""
+  });
 
+  const showSnackbar = () => setOpenSnackbar(true);
+  const closeSnackbar = () => setOpenSnackbar(false);
 
-  const renderComponent = () => {
+  const updateSnackbarType = (severity, message) => {
+    setSnackbarType({
+      severity: severity,
+      message: message
+    })
+  }
+  
+  const updateAndRefreshView = () => {
     setRender(render + 1);
   }
 
-  const navigate = useNavigate();
-
-  const openBookForm = () => {
-    setOpenFormModal(true);
+  const fetchBooks = async () => {
+    try{
+      const response = await axios({url: "/books", withCredentials: true});
+      setBooks([...response.data.books]);
+    } catch(err) {
+      const status = err.response.status;
+      
+      if(status === 401) return navigate("/login");
+      
+      return navigate("/error");
+    }
   }
 
-  const handleSetCategory = (e) => {
+  useEffect(() => {
+    (async function () {
+      await fetchBooks();
+      setIsLoading(false);
+    })();
 
-  }
-
-  const apiCalls = [
-    fetch("/books")
-    .then(res => res.json())
-    .then(res => {
-      setBooks([...res.books]);
-      setTotalOfFinishedBooks(books.totalOfFinishedBooks);
-    }),
-    fetch("/categories")
-    .then(res => res.json())
-    .then(res => {
-      setCategoriesList([...res]);
-    }),
-    fetch("/status")
-    .then(res => res.json())
-    .then(res => {
-      setStatusList([...res]);
-    })
-  ]
-
-
-  useEffect( () => {
-    Promise.all(apiCalls)
-    .catch(err => console.log(err));
   }, [render]);
-// {/* <div>
-//       <div className="greet-box">
-//         <p>Hello, Jazelle!</p>
-//         <p className="secondary-text">You have read <span>{totalOfFinishedBooks}</span> books 
-//         in the last {/*insert here the day the user was created then convert to days*/} days.</p>
-//       </div>
-//       <div className="add-sort-container">
-//       <FormModal renderComponent={renderComponent}/>
-//       </div>
-//       <div >
-//         {books.map(book => 
-          // <BookItem 
-          //   book_id={book.book_id}
-          //   title={book.title}
-          //   author={book.author}
-          //   description={book.description}
-          //   rating={book.rating}
-          //   precision={getPrecision(book.rating)}
-          //   img={book.img}
-          //   category={book.category}
-          //   status={book.status}
-          //   renderComponent={renderComponent}
-          // />
-//         )}
-//       </div>
-//       </div> */}
 
   return (
     <div>
-      <HeaderBar />
+      <HeaderBar 
+        showSnackbar={showSnackbar}
+        updateSnackbarType={updateSnackbarType}
+      />
       <ControlTabs 
-      handleSetCategory={handleSetCategory}
       statusList={statusList}
       categoriesList={categoriesList}
-      openBookForm={openBookForm}
+      updateAndRefreshView={updateAndRefreshView}
+      showSnackbar={showSnackbar}
+      updateSnackbarType={updateSnackbarType}
       />
       <div className="books-container">
-        {books.map(book => {
+      {
+        isLoading ? <Loading />
+        : 
+        !books.length ? 
+        (<p>It seems your library is empty. Add a new book to get started.</p>)
+        :
+        books.map(book => {
           return <BookItem 
             book_id={book.book_id}
             title={book.title}
@@ -104,10 +90,18 @@ function Library() {
             img={book.img}
             category={book.category}
             status={book.status}
-            renderComponent={renderComponent}
+            updateAndRefreshView={updateAndRefreshView}
+            showSnackbar={showSnackbar}
+            updateSnackbarType={updateSnackbarType}
           />
-        })}
+        })
+      }
       </div>
+      <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={closeSnackbar}>
+        <Alert onClose={closeSnackbar} variant="filled" severity={snackbarType.severity} sx={{ width: '100%' }}>
+          {snackbarType.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

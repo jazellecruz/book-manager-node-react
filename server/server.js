@@ -1,41 +1,31 @@
 require("dotenv").config();
 const express = require("express");
-const axios = require("axios");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const app = express();
-const {BOOKED_API} = require("./src/config/index");
+const books_route = require("./src/routes/books");
+const auth_route = require("./src/routes/auth");
+const { isUserAuthenticated } = require("./src/middleware/auth");
+const { errorHandler } = require("./src/middleware/error");
 
 app.use(cors({
   origin: 'http://localhost:3000',
   methods: 'GET,POST,PUT,DELETE',
 }));
 
-app.get("/books", async(req, res) => {
-  let response = await axios(`http://localhost:8000/books`);
-  res.send(response.data);
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/auth", auth_route);
+
+app.use("/books", isUserAuthenticated, books_route);
+
+app.use(errorHandler);
+
+app.listen(5000, "localhost", (req, res) => {
+  if(process.env.NODE_ENV === "development") {
+    console.log("Currently running in development environment.");
+  }
+
+  console.log("Running on port 5000!")
 });
-
-app.post("/books", (req, res) => {
-  console.log(req.query)
-});
-
-app.get("/categories", async(req, res) => {
-  let response = await axios(`http://localhost:8000/categories`);
-  res.send(response.data);
-});
-
-app.post("/categories", async(req, res) => {
-
-});
-
-app.get("/status", async(req, res) => {
-  let response = await axios("http://localhost:8000/status");
-  res.send(response.data);
-});
-
-app.post("/reviews", async(req, res) => {
-
-});
-
-
-app.listen(5000, "localhost", (req, res) => console.log("Running on port 5000!"));

@@ -48,6 +48,11 @@
   border: none;
 }
 
+.login-btn .loading-svg {
+  height: 13px;
+  width: 13px;
+}
+
 .login-section p:first-of-type {
   font-size: 26px;
 }

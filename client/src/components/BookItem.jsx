@@ -1,5 +1,4 @@
-import { useState, useContext } from "react";
-import { Link } from 'react-router-dom';
+import { useState } from "react";
 import axios from "axios";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import Dialog from '@mui/material/Dialog';
@@ -7,15 +6,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Rating  from "@mui/material/Rating";
 import Button  from "@mui/material/Button";
-import { kebabCase, trimString } from "../helpers/helpers"
-import { SnackbarContext } from "../contexts/context";
+import { trimString } from "../helpers/helpers"
+import { useNavigate } from "react-router-dom";
 import "../styles/bookItem.css"
+import bookAltImg from "../assets/book-alt.png";
 
-const BookItem = ({title, author, description, img, rating, category, status, precision, book_id, renderComponent}) => {
+const BookItem = ({title, author, description, img, category, status, book_id, updateAndRefreshView, updateSnackbarType, showSnackbar}) => {
+  const navigate = useNavigate();
   const [openDialogue, setOpenDialogue] = useState(false);
-  const openSnackbar = useContext(SnackbarContext);
 
   const handleOpenDialogue = () => {
     setOpenDialogue(true);
@@ -25,48 +24,47 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
     setOpenDialogue(false);
   };
 
-  const handleDelete = (book_id) => {
-    axios({
-      method: "delete",
-      url: `https://booked-api.vercel.app/library/books/${book_id}`,
-      headers: {
-        "x-access-token": localStorage.getItem("accessToken")
-      }
-      })
-    .then(res => {
-      if(res.status === 200) {
-        renderComponent()
-        openSnackbar("success", "Successfully deleted book!")
-      }
-    })
-    .catch(err => {
-      openSnackbar("error", `Request failed! Try again later. (Error ${err.response.status})`)
-    });
+  const deleteBook = async (book_id) => {
+    try{
+      await axios({
+        method: "DELETE",
+        url: `/books/${book_id}`,
+        withCredentials: true
+      });
+      updateAndRefreshView();
+      updateSnackbarType("success", "Successfully deleted book!");
+    } catch(err) {
+      const status = err.response.status;
+
+      if(status === 401) return navigate("/login"); 
+      if(status === 404) return updateSnackbarType("error", "Failed to delete book. Book not found.");
+     
+      updateSnackbarType("error", "An error occurred. Try again later.");
+    } finally {
+      showSnackbar();
+    }
   }
 
- 
   return(
     <>
     <div className="book-item">
       <div className="book-img-container">
-          <img src={img} alt="book-cover"/>
+        <img src={img ? img : bookAltImg} 
+        alt="book-cover" 
+        onError={(e) => {
+        e.target.onerror = null; 
+        e.target.src=bookAltImg;
+  }}/>
       </div>
       <div className="book-info-container">
-        <p className="book-title">{title}</p>
-        <div>
-          <p className="sub-text">{author}</p>
-          <Rating name="simple-controlled" value={rating} size="small" readOnly/>
+        <div className="book-title-and-author-container">
+          <p className="book-title">{title}</p>
+          <p className="sub-text">By {author}</p>
         </div>
-        <p className="secondary-text">{trimString(description)}</p>
-        <div>
-          <p>
-            <span className="sub-text">Status:</span> 
-            <span className={kebabCase(status)}> {status}</span>
-          </p>
-          <p>
-            <span className="sub-text">Category:</span> 
-            <span> <Link to={`../categories/${kebabCase(category)}`}>{category}</Link></span>
-          </p>
+        <p className="">{trimString(description)}</p>
+        <div className="book-status-category-container">
+          <p>Status: <span className="sub-text"> {status}</span></p>
+          <p>Category: <span className="sub-text">{category} </span></p>
         </div>
       </div>
       <button className="deleteBook-btn" onClick={handleOpenDialogue}>
@@ -92,7 +90,7 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
           <DialogActions>
             <Button onClick={handleCloseDialogue}>Cancel</Button>
             <Button onClick={() => {
-              handleDelete(book_id)
+              deleteBook(book_id)
               handleCloseDialogue();
               }} 
               autoFocus>
@@ -102,7 +100,6 @@ const BookItem = ({title, author, description, img, rating, category, status, pr
         </Dialog>
       </div>
     </div>
-    <hr className="divider" />
     </>
   );
 }

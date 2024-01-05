@@ -1,20 +1,23 @@
 @import url('//fonts.cdnfonts.com/css/poppins');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
 * {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 
 body {
   height: 100%;
   width: 100%;
-  color: #201e1e;
+  color: #242323;
 }
 
-.secondary-text{
-  color: #7c8085;
+main {
+  width: 1000px;
+  margin: 0 auto;
 }
+
 
 a {
   text-decoration: none;
@@ -65,3 +68,19 @@ p span {
   border-top: 2px solirgb(172, 172, 172)75;
   width: 100%;
 }
+
+.books-container .loading-svg {
+  height: 40px;
+  width: 40px;
+}
+
+
+
+/*FOR THE GO BACK HOME BUTTON IN ERROR*/
+/* .MuiButtonBase-root.MuiButton-contained {
+  font-family: inherit;
+  text-transform: capitalize;
+  font-weight: 400;
+  width: 150px;
+  box-shadow: none;
+} */

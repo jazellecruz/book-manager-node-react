@@ -2,9 +2,8 @@
 const Loading = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" 
-      style={{margin: "auto", background: "transparent", display: "block", shaperendering: "auto"}}   
-      width="13px" 
-      height="13px" 
+      style={{margin: "auto", background: "transparent", display: "block", shaperendering: "auto"}} 
+      className="loading-svg"  
       viewBox="0 0 100 100" 
       preserveAspectRatio="xMidYMid">
       <circle cx="50" cy="50" 

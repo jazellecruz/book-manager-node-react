@@ -41,7 +41,7 @@ const Login = () => {
     setLoading(true)
     axios({
       method: "post",
-      url: "https://booked-api.vercel.app/auth/login",
+      url: "/auth/login",
       data: credentials,
       withCredentials: true
     })
@@ -71,25 +71,6 @@ const Login = () => {
       } else {
         setError({message: "An error occured. Please try again later."})
       }
-
-      // console.log(err)
-      // if(err.code === "ERR_NETWORK") {
-      //   setError({message: "An error occured. Please try again later."})
-      // } else {
-      //   return
-      // }
-
-      // if (err.response.status === 401 || err.response.status === 404) {
-      //   setError({
-      //     message: "Invalid user credentials.",
-      //     status: err.response.status
-      //   })
-      // } else if (err.response.status === 500) {
-      //   setError({
-      //     message: "Internal Error in Server. Try again later.",
-      //     status: err.response.status
-      //   });
-      // }
       setLoading(false);
       setOpenSnackbar(true);
       setCredentials({
